@@ -30,6 +30,7 @@ var con = mysql.createConnection({
 /* Routing */
 app.get('/', function (req, res) {
     res.render('home');
+    console.log('homestart ');
 });
 app.get('/index', function (req, res) {
     res.send('<h1>This is index page</h1>');
@@ -47,6 +48,6 @@ app.get('/user/:id',function(req,res){
 
  
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
-// app.listen(port, function() {
-//     console.log('Starting node.js on port ' + port);
-// });
+app.listen(port, function() {
+    console.log('Starting node.js on port ' + port);
+});
