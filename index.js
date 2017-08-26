@@ -22,10 +22,10 @@ var con = mysql.createConnection({
   password: process.env.DB_PASSWORD
 });
 
-con.connect(function(err){
-	if(err) throw err;
-		console.log("Connected!")
-})
+// con.connect(function(err){
+// 	if(err) throw err;
+// 		console.log("Connected!")
+// })
 
 /* Routing */
 app.get('/', function (req, res) {
@@ -47,6 +47,6 @@ app.get('/user/:id',function(req,res){
 
  
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
-app.listen(port, function() {
-    console.log('Starting node.js on port ' + port);
-});
+// app.listen(port, function() {
+//     console.log('Starting node.js on port ' + port);
+// });
