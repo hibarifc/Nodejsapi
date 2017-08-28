@@ -7,7 +7,7 @@ var mysql = require('mysql');
 
 var users = require('./users');
 /* ใช้ port 7777 หรือจะส่งเข้ามาตอนรัน app ก็ได้ */
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 7777;
 //parse
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -22,10 +22,10 @@ var con = mysql.createConnection({
   password: process.env.DB_PASSWORD
 });
 
-// con.connect(function(err){
-// 	if(err) throw err;
-// 		console.log("Connected!")
-// })
+con.connect(function(err){
+	if(err) throw err;
+		console.log("Connected!")
+})
 
 /* Routing */
 app.get('/', function (req, res) {
