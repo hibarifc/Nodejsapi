@@ -49,14 +49,14 @@ exports.reGister = function(req,res){
             if (result[0]!=null)
             {
                 console.log("username Not ready");
-                res.send({ ok: false, username : 'not ready'});
+                res.send({ ok: false, status : ' username not ready'});
             }
             else{
                 console.log("username is ready");
                 con.query(check1,[email],function(err,result){
                     if(result[0]!=null){
                         console.log("email Not ready");
-                        res.send({ ok: false, email : 'not ready'});
+                        res.send({ ok: false, status : ' email not ready'});
                     }
                     else{
                         console.log("email is ready");
@@ -86,9 +86,50 @@ exports.reGister = function(req,res){
                 });
             }
     });
+}
 
+exports.logIn = function(req,res){
+    let username = req.body.username;
+    let password = req.body.password;
+    let date = new Date().toLocaleDateString();
+    let time = new Date().toLocaleTimeString();
+    let datetime = date+' '+time;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    var sql = "SELECT id from users WHERE username=? AND password=? AND is_active = 1";
+    var sql2 = "INSERT INTO user_status_history(users_id,login_time,is_active,created_by,created_at) VALUES (?,?,1,'system',?)";
+    var sql3 = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM thedrones.user_status_history WHERE users_id =? )";
+    var sql4 = "UPDATE users SET users_status_history_id = ? WHERE id = ?";
+    con.query(sql,[username,password],function(err,result){
+       
+         if (result[0]!=null){
+            let userid = result[0].id;
+            con.query(sql2,[userid,datetime,datetime],function(err,result){
+               if (err) throw err;
+                console.log("history update");
+            });
+            con.query(sql3,[userid],function(err,result){
 
-
-
-
+                if (result[0]!=null) {
+                    let historyid = [result[0].id];
+                    console.log(result[0].id);
+                    con.query(sql4,[result[0].id,userid],function(err,result){
+                        console.log("user update");
+                    });
+                }
+                else{
+                    console.log('file');
+                }
+            });
+            console.log(userid);
+            res.send({ ok: true, status : 'login'});
+         }
+         else{
+            res.send({ ok: false, status : 'No login'});
+         }
+    });
 }

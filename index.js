@@ -32,14 +32,14 @@ app.get('/', function (req, res) {
     res.render('home');
     console.log('homestart ');
 });
-app.get('/index', function (req, res) {
-    res.send('<h1>This is index page</h1>');
-});
 app.get('/user',function(req,res){
 	users.findAll();
 });
 app.post('/user/register',function(req,res){
 	users.reGister(req,res);
+});
+app.post('/user/login',function(req,res){
+	users.logIn(req,res);
 });
 app.get('/user/:id',function(req,res){
 	var id = req.params.id;
