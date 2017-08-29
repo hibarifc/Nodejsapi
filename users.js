@@ -1,26 +1,41 @@
 var mysql = require('mysql');
 /* ฟังก์ชันสำหรับหา user ทั้งหมดในระบบ ในส่วนนี้ผมจะให้ส่งค่า users ทั้งหมดกลับไปเลย */
+
+var users = [
+{
+    "id": 1,
+    "username": "goldroger",
+    "name": "Gol D. Roger",
+    "position": "Pirate King"
+},
+{
+    "id": 2,
+    "username": "mrzero",
+    "name": "Sir Crocodile",
+    "position": "Former-Shichibukai"
+},
+{
+    "id": 3,
+    "username": "luffy",
+    "name": "Monkey D. Luffy",
+    "position": "Captain"
+},
+{
+    "id": 4,
+    "username": "kuzan",
+    "name": "Aokiji",
+    "position": "Former Marine Admiral"
+},
+{
+    "id": 5,
+    "username": "shanks",
+    "name": "'Red-Haired' Shanks",
+    "position": "The 4 Emperors"
+}
+];
 exports.findAll = function(req,res) {
-    var check = "SELECT * from users";
-    var con = mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database : process.env.DB_NAME
-    });
-    con.query(check,function(err, result){
-         let customers = [];
-         result.forEach(v => {
-        let user = {};
-        user.id = v.id;
-        user.username = v.username;
-        user.password = v.password;
-        customers.push(user);
-      })
-      res.send({ ok: true, result: customers });
-    });
-};
- 
+    return users;
+ };
 /* ฟังก์ชันสำหรับหา user จาก id ในส่วนนี้เราจะวน loop หา users ที่มี id ตามที่ระบุแล้วส่งกลับไป */
 exports.findById = function (id) {
     for (var i = 0; i < users.length; i++) {
@@ -49,7 +64,7 @@ exports.reGister = function(req,res){
             if (result[0]!=null)
             {
                 console.log("username Not ready");
-                res.send({ ok: false, status : ' username not ready'});
+                res.json({ ok: false, status : ' username not ready'});
             }
             else{
                 console.log("username is ready");
@@ -81,7 +96,7 @@ exports.reGister = function(req,res){
                                       console.log("update comple");
                                 });
                         });
-                        res.send({ ok: true, status : 'Complete'});
+                        res.json({ ok: true, status : 'Complete'});
                     }
                 });
             }
@@ -126,10 +141,11 @@ exports.logIn = function(req,res){
                 }
             });
             console.log(userid);
-            res.send({ ok: true, status : 'login'});
+            res.json({ ok: true, status : 'login'});
          }
          else{
-            res.send({ ok: false, status : 'No login'});
+            res.json({ ok: false, status : 'No login'});
          }
     });
 }
+
