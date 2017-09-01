@@ -41,7 +41,7 @@ exports.findById = function (id) {
     for (var i = 0; i < users.length; i++) {
         if (users[i].id == id) return users[i];
     }
-};
+}
 
 exports.reGister = function(req,res){
     let username = req.body.username;
@@ -152,4 +152,39 @@ exports.logIn = function(req,res){
 }
 
 
+
+exports.upDateuser = function (req,res) {
+    let userid = req.body.userid;
+    let nationality_id =req.body.nationality_id;
+    let province_id =req.body.province_id;
+    let firstname =req.body.firstname;
+    let lastname= req.body.lastname;
+    let pathphoto =req.body.pathphoto;
+    let phone =req.body.phone;
+    let address =req.body.address;
+    let city= req.body.city;
+    let postcode =req.body.postcode;
+    let passport_number =req.body.passport_number;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    var sql = "SELECT users_detail_id from users WHERE id=?";
+    var sql1 = "UPDATE users_detail SET nationality_id=?, province_id=?, firstname=?, lastname=?, pathphoto=?,phone=?, address=?,city=?,postcode=?,passport_number=? WHERE id=?";
+
+    con.query(sql,[userid],function(err,result){
+         if (result[0]!=null){
+            var usersdetailid =result[0].users_detail_id;
+            con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,phone,address,city,postcode,passport_number,userid],function (err,result) {
+                console.log("updateuserdetail");
+                res.json({ ok: true, status : 'UpdateComplete'});
+            });
+         }
+         else{
+             res.json({ ok: false, status : 'error'});
+         }
+    });
+}
 

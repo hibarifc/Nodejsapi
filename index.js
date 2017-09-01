@@ -58,11 +58,10 @@ app.post('/user/register',function(req,res){
 });
 app.post('/user/login',function(req,res){
 	users.logIn(req,res);
-	 console.log('login ');
+	console.log('login ');
 });
-app.get('/user/:id',function(req,res){
-	var id = req.params.id;
-	res.json(users.findById(id));
+app.post('/user/updateuser',function(req,res){
+	users.upDateuser(req,res);
 });
 
  
