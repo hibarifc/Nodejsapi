@@ -177,7 +177,6 @@ exports.logOut = function (req,res) {
     });
 }
 
-
 exports.upDateuser = function (req,res) {
     let userid = req.body.userid;
     let nationality_id =req.body.nationality_id;
