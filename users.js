@@ -115,7 +115,7 @@ exports.logIn = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id from users WHERE username=? AND password=? AND is_active = 1";
+    var sql = "SELECT id,username,users_types_id from users WHERE username=? AND password=? AND is_active = 1";
     var sql2 = "INSERT INTO user_status_history(users_id,login_time,is_active,created_by,created_at) VALUES (?,?,1,'system',?)";
     var sql3 = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM thedrones.user_status_history WHERE users_id =? )";
     var sql4 = "UPDATE users SET users_status_history_id = ? WHERE id = ?";
@@ -123,6 +123,8 @@ exports.logIn = function(req,res){
        
          if (result[0]!=null){
             let userid = result[0].id;
+            let username = result[0].username;
+            let type = result[0].users_types_id;
             con.query(sql2,[userid,datetime,datetime],function(err,result){
                if (err) throw err;
                 console.log("history update");
@@ -141,11 +143,13 @@ exports.logIn = function(req,res){
                 }
             });
             console.log(userid);
-            res.json({ ok: true, status : 'login'});
+            res.json({ ok: true, status : 'login',userid : userid,username : username ,type :type });
          }
          else{
             res.json({ ok: false, status : 'No login'});
          }
     });
 }
+
+
 
