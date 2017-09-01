@@ -117,7 +117,7 @@ exports.logIn = function(req,res){
     });
     var sql = "SELECT id,username,users_types_id from users WHERE username=? AND password=? AND is_active = 1";
     var sql2 = "INSERT INTO user_status_history(users_id,login_time,is_active,created_by,created_at) VALUES (?,?,1,'system',?)";
-    var sql3 = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM thedrones.user_status_history WHERE users_id =? )";
+    var sql3 = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM user_status_history WHERE users_id =? )";
     var sql4 = "UPDATE users SET users_status_history_id = ? WHERE id = ?";
     con.query(sql,[username,password],function(err,result){
        
@@ -132,7 +132,7 @@ exports.logIn = function(req,res){
             con.query(sql3,[userid],function(err,result){
 
                 if (result[0]!=null) {
-                    let historyid = [result[0].id];
+                    let historyid = result[0].id;
                     console.log(result[0].id);
                     con.query(sql4,[result[0].id,userid],function(err,result){
                         console.log("user update");
@@ -151,6 +151,31 @@ exports.logIn = function(req,res){
     });
 }
 
+exports.logOut = function (req,res) {
+    let userid = req.body.userid;
+    let date = new Date().toLocaleDateString();
+    let time = new Date().toLocaleTimeString();
+    let datetime = date+' '+time;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    var sql = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM user_status_history WHERE users_id =? )";
+    var sql1 = "UPDATE user_status_history SET logout_time=? WHERE id=?";
+    con.query(sql,[userid],function(err,result){
+         if (result[0]!=null) {
+            var historyid = result[0].id;
+            con.query(sql1,[datetime,historyid],function(err,result){
+                console.log("user logout");
+                 res.json({ ok: true, status : 'logout'});
+            });
+         }
+        console.log("user update");
+    });
+}
 
 
 exports.upDateuser = function (req,res) {

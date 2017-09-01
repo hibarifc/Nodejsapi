@@ -60,6 +60,10 @@ app.post('/user/login',function(req,res){
 	users.logIn(req,res);
 	console.log('login ');
 });
+app.post('/user/logout',function(req,res){
+    users.logOut(req,res);
+    console.log('logout ');
+});
 app.post('/user/updateuser',function(req,res){
 	users.upDateuser(req,res);
 });
