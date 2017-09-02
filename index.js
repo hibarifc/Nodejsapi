@@ -87,6 +87,28 @@ app.get('/reference/province',function(req,res){
     reference.getProvince(req,res);
     console.log("getProvince ");
 });
+app.get('/reference/dronestatus',function(req,res){
+    reference.getDronestatus(req,res);
+    console.log("getDronestatus ");
+});
+app.get('/reference/paymentchanal',function(req,res){
+    reference.getPaymentchanal(req,res);
+    console.log("getPaymentchanal ");
+});
+app.get('/reference/paymentstatus',function(req,res){
+    reference.getPaymentstatus(req,res);
+    console.log("getPaymentstatus ");
+});
+app.get('/reference/userstype',function(req,res){
+    reference.getUserstype(req,res);
+    console.log("getUserstype ");
+});
+app.get('/reference/workstatus',function(req,res){
+    reference.getWorkstatus(req,res);
+    console.log("getWorkstatus ");
+});
+// -------------------------------------------------------------------
+
 
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
 app.listen(port, function() {
