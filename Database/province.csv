@@ -1,76 +1,78 @@
-sd,กระบี่,1,system,23/8/2017
-,กรุงเทพมหานคร,1,system,23/8/2017
-,กาญจนบุรี,1,system,23/8/2017
-,กาฬสินธุ์,1,system,23/8/2017
-,กำแพงเพชร,1,system,23/8/2017
-,ขอนแก่น,1,system,23/8/2017
-,จันทบุรี,1,system,23/8/2017
-,ฉะเชิงเทรา,1,system,23/8/2017
-,ชลบุรี,1,system,23/8/2017
-,ชัยนาท,1,system,23/8/2017
-,ชัยภูมิ,1,system,23/8/2017
-,ชุมพร,1,system,23/8/2017
-,เชียงราย,1,system,23/8/2017
-,เชียงใหม่,1,system,23/8/2017
-,ตรัง,1,system,23/8/2017
-,ตราด,1,system,23/8/2017
-,ตาก,1,system,23/8/2017
-,นครนายก,1,system,23/8/2017
-,นครปฐม,1,system,23/8/2017
-,นครพนม,1,system,23/8/2017
-,นครราชสีมา,1,system,23/8/2017
-,นครศรีธรรมราช,1,system,23/8/2017
-,นครสวรรค์,1,system,23/8/2017
-,นนทบุรี,1,system,23/8/2017
-,นราธิวาส,1,system,23/8/2017
-,น่าน,1,system,23/8/2017
-,บุรีรัมย์,1,system,23/8/2017
-,ปทุมธานี,1,system,23/8/2017
-,ประจวบคีรีขันธ์,1,system,23/8/2017
-,ปราจีนบุรี,1,system,23/8/2017
-,ปัตตานี,1,system,23/8/2017
-,พระนครศรีอยุธยา,1,system,23/8/2017
-,พะเยา,1,system,23/8/2017
-,พังงา,1,system,23/8/2017
-,พัทลุง,1,system,23/8/2017
-,พิจิตร,1,system,23/8/2017
-,พิษณุโลก,1,system,23/8/2017
-,เพชรบุรี,1,system,23/8/2017
-,เพชรบูรณ์,1,system,23/8/2017
-,แพร่,1,system,23/8/2017
-,ภูเก็ต,1,system,23/8/2017
-,มหาสารคาม,1,system,23/8/2017
-,มุกดาหาร,1,system,23/8/2017
-,แม่ฮ่องสอน,1,system,23/8/2017
-,ยโสธร,1,system,23/8/2017
-,ยะลา,1,system,23/8/2017
-,ร้อยเอ็ด,1,system,23/8/2017
-,ระนอง,1,system,23/8/2017
-,ระยอง,1,system,23/8/2017
-,ราชบุรี,1,system,23/8/2017
-,ลพบุรี,1,system,23/8/2017
-,เลย,1,system,23/8/2017
-,ลำปาง,1,system,23/8/2017
-,ลำพูน,1,system,23/8/2017
-,ศีรสะเกษ,1,system,23/8/2017
-,สกลนคร,1,system,23/8/2017
-,สงขลา,1,system,23/8/2017
-,สตูล,1,system,23/8/2017
-,สมุทรปราการ,1,system,23/8/2017
-,สมุทรสงคราม,1,system,23/8/2017
-,สมุทรสาคร,1,system,23/8/2017
-,สระแก้ว,1,system,23/8/2017
-,สระบุรี,1,system,23/8/2017
-,สิงห์บุรี,1,system,23/8/2017
-,สุโขทัย,1,system,23/8/2017
-,สุพรรณบุรี,1,system,23/8/2017
-,สุราษฎร์ธานี,1,system,23/8/2017
-,สุรินทร์,1,system,23/8/2017
-,หนองคาย,1,system,23/8/2017
-,หนองบัวลำภู,1,system,23/8/2017
-,อ่างทอง,1,system,23/8/2017
-,อำนาจเจริญ,1,system,23/8/2017
-,อุดรธานี,1,system,23/8/2017
-,อุตรดิตถ์,1,system,23/8/2017
-,อุทัยธานี,1,system,23/8/2017
-,อุบลราชธานี,1,system,23/8/2017
+id,Bangkok,1,system
+,Amnat Charoen,1,system
+,Ang Thong,1,system
+,Bueng Kan,1,system
+,Buriram,1,system
+,Chachoengsao,1,system
+,Chainat,1,system
+,Chaiyaphum,1,system
+,Chanthaburi,1,system
+,Chiang Mai,1,system
+,Chiang Rai,1,system
+,Chonburi,1,system
+,Chumphon,1,system
+,Kalasin,1,system
+,Kamphaeng Phet,1,system
+,Kanchanaburi,1,system
+,Khon Kaen,1,system
+,Krabi,1,system
+,Lampang,1,system
+,Lamphun,1,system
+,Loei,1,system
+,Lopburi,1,system
+,Mae Hong Son,1,system
+,Maha Sarakham,1,system
+,Mukdahan,1,system
+,Nakhon Nayok,1,system
+,Nakhon Pathom,1,system
+,Nakhon Phanom,1,system
+,Nakhon Ratchasima,1,system
+,Nakhon Sawan,1,system
+,Nakhon Si Thammarat,1,system
+,Nan,1,system
+,Narathiwat,1,system
+,Nong Bua Lamphu,1,system
+,Nong Khai City,1,system
+,,1,system
+,Nonthaburi,1,system
+,Pathum Thani,1,system
+,Pattani,1,system
+,Phang Nga,1,system
+,Phatthalung,1,system
+,Phayao,1,system
+,Phetchabun,1,system
+,Phetchaburi,1,system
+,Phichit,1,system
+,Phitsanulok,1,system
+,Phra Nakhon Si Ayutthaya,1,system
+,Phrae,1,system
+,Phuket,1,system
+,Prachinburi,1,system
+,Prachuap Khiri Khan,1,system
+,Ranong,1,system
+,Ratchaburi,1,system
+,Rayong,1,system
+,Roi Et,1,system
+,Sa Kaeo,1,system
+,Sakon Nakhon,1,system
+,Samut Prakan,1,system
+,Samut Sakhon,1,system
+,Samut Songkhram,1,system
+,Saraburi,1,system
+,Satun,1,system
+,Sing Buri,1,system
+,Sisaket,1,system
+,Songkhla,1,system
+,Sukhothai,1,system
+,Suphan Buri,1,system
+,Surat Thani,1,system
+,Surin,1,system
+,Tak,1,system
+,Trang,1,system
+,Trat,1,system
+,Ubon Ratchathani,1,system
+,Udon Thani,1,system
+,Uthai Thani,1,system
+,Uttaradit,1,system
+,Yala,,
+,Yasothon,,

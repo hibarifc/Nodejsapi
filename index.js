@@ -7,6 +7,7 @@ var mysql = require('mysql');
 
 var users = require('./users');
 var drone = require('./drone');
+var reference = require('./reference');
 /* ใช้ port 7777 หรือจะส่งเข้ามาตอนรัน app ก็ได้ */
 var port = process.env.PORT || 80;
 //parse
@@ -51,6 +52,7 @@ app.get('/', function (req, res) {
     res.render('home');
     console.log('homestart ');
 });
+
 // --------------------------- Rout USER----------------------------
 app.get('/user',function(req,res){
 	res.json(users.findAll());
@@ -70,13 +72,21 @@ app.post('/user/updateuser',function(req,res){
 	users.upDateuser(req,res);
 });
 // --------------------------------------------------------------
-// 
-// 
-// 
+
 app.post('/drone/add',function(req,res){
     drone.addDrone(req,res);
 });
 
+
+// -------------------------------------------------------------------
+app.get('/reference/nationality',function(req,res){
+    reference.getNationality(req,res);
+    console.log("nationality get");
+});
+app.get('/reference/province',function(req,res){
+    reference.getProvince(req,res);
+    console.log("getProvince ");
+});
 
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
 app.listen(port, function() {
