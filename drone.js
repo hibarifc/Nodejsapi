@@ -11,7 +11,7 @@ exports.addDrone = function (req,res) {
 	let date = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
     let datetime = date+' '+time;
-    
+
 
 	var con = mysql.createConnection({
         host: process.env.DB_HOST,

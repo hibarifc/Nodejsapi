@@ -47,7 +47,7 @@ exports.upDatework = function(transactionid){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql ="UPDATE works SET workstatus_id=2 WHERE id=?";
+    var sql ="UPDATE works SET workstatus_id=2 WHERE transaction_id=?";
     con.query(sql,[transactionid],function(err,result){
         if (err) throw err;
             console.log("UPDATE Work comple");
