@@ -9,9 +9,9 @@ exports.saveTransaction = function (req,res) {
 	let payment_chanal_id = req.body.payment_chanal_id;
 	let amount = req.body.amount;
 	let date = req.body.date;
-	let date = new Date().toLocaleDateString();
+	let date1 = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
-    let datetime = date+' '+time;
+    let datetime = date1+' '+time;
 
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
