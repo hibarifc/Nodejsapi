@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 require('dotenv').config();
 var mysql = require('mysql');
 
-
+var transaction = require('./transaction');
 var users = require('./users');
 var drone = require('./drone');
 var reference = require('./reference');
@@ -34,7 +34,6 @@ app.use(function (req, res, next) {
     next();
 });
 app.set('view engine','ejs');
-
 
 var con = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -71,14 +70,23 @@ app.post('/user/logout',function(req,res){
 app.post('/user/updateuser',function(req,res){
 	users.upDateuser(req,res);
 });
-// --------------------------------------------------------------
+app.post('/user/getuser',function(req,res){
+    users.getUser(req,res);
+});
+
+// ------------------------DRONE-------------------------
 
 app.post('/drone/add',function(req,res){
     drone.addDrone(req,res);
 });
+app.post('/drone/getdrone',function(req,res){
+    drone.getDrone(req,res);
+});
 
 
-// -------------------------------------------------------------------
+
+// ------------------------------GET REFERENCE---------------------
+
 app.get('/reference/nationality',function(req,res){
     reference.getNationality(req,res);
     console.log("nationality get");
@@ -108,7 +116,10 @@ app.get('/reference/workstatus',function(req,res){
     console.log("getWorkstatus ");
 });
 // -------------------------------------------------------------------
-
+app.post('/transaction/save',function(req,res){
+    transaction.saveTransaction(req,res);
+    console.log("saveTransaction ");
+});
 
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
 app.listen(port, function() {

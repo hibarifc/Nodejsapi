@@ -1,46 +1,28 @@
 var mysql = require('mysql');
 /* ฟังก์ชันสำหรับหา user ทั้งหมดในระบบ ในส่วนนี้ผมจะให้ส่งค่า users ทั้งหมดกลับไปเลย */
 
-var users = [
-{
-    "id": 1,
-    "username": "goldroger",
-    "name": "Gol D. Roger",
-    "position": "Pirate King"
-},
-{
-    "id": 2,
-    "username": "mrzero",
-    "name": "Sir Crocodile",
-    "position": "Former-Shichibukai"
-},
-{
-    "id": 3,
-    "username": "luffy",
-    "name": "Monkey D. Luffy",
-    "position": "Captain"
-},
-{
-    "id": 4,
-    "username": "kuzan",
-    "name": "Aokiji",
-    "position": "Former Marine Admiral"
-},
-{
-    "id": 5,
-    "username": "shanks",
-    "name": "'Red-Haired' Shanks",
-    "position": "The 4 Emperors"
-}
-];
+
 exports.findAll = function(req,res) {
     return users;
  };
 /* ฟังก์ชันสำหรับหา user จาก id ในส่วนนี้เราจะวน loop หา users ที่มี id ตามที่ระบุแล้วส่งกลับไป */
-exports.findById = function (id) {
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].id == id) return users[i];
-    }
+exports.getUser = function (req,res) {
+    let province_id = req.body.province_id;
+    let users_types_id = req.body.users_types_id;
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    var sql = "SELECT * FROM users INNER JOIN users_detail ON users.users_detail_id=users_detail.id WHERE users_detail.province_id = ? AND users.users_types_id = ? AND users.is_active='1'";
+    con.query(sql,[province_id,users_types_id],function(err, result){
+        if (result[0]!=null){
+            res.json({ ok: true, status : result});
+        }
+    });
 }
 
 exports.reGister = function(req,res){
