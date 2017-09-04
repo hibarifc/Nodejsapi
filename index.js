@@ -8,6 +8,8 @@ var transaction = require('./transaction');
 var users = require('./users');
 var drone = require('./drone');
 var reference = require('./reference');
+var work = require('./work');
+var payment = require('./payment');
 /* ใช้ port 7777 หรือจะส่งเข้ามาตอนรัน app ก็ได้ */
 var port = process.env.PORT || 80;
 //parse
@@ -53,8 +55,8 @@ app.get('/', function (req, res) {
 });
 
 // --------------------------- Rout USER----------------------------
-app.get('/user',function(req,res){
-	res.json(users.findAll());
+app.post('/user/getuserdetail',function(req,res){
+	users.getUserdetail(req,res);
 });
 app.post('/user/register',function(req,res){
 	users.reGister(req,res);
@@ -115,12 +117,24 @@ app.get('/reference/workstatus',function(req,res){
     reference.getWorkstatus(req,res);
     console.log("getWorkstatus ");
 });
-// -------------------------------------------------------------------
+// -----------------------transaction-------------------------------
 app.post('/transaction/save',function(req,res){
     transaction.saveTransaction(req,res);
     console.log("saveTransaction ");
 });
 
+//-------------------------work----------------------------------
+
+app.post('/work/getwork',function(req,res){
+    work.getWork(req,res);
+    console.log("getwork ");
+});
+
+//--------------------------------------------------------------
+app.post('/payment/savepayment',function(req,res){
+    payment.savePayment(req,res);
+    console.log("savepayment ");
+});
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
 app.listen(port, function() {
     console.log('Starting node.js on port ' + port);

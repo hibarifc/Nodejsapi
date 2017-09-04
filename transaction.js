@@ -1,10 +1,11 @@
 var mysql = require('mysql');
-
+var work = require('./work');
 
 exports.saveTransaction = function (req,res) {
 	let users_id_service = req.body.users_id_service;
 	let users_id_ranter = req.body.users_id_ranter;
 	let transaction_detail = req.body.transaction_detail;
+	let payment_chanal_id = req.body.payment_chanal_id;
 	let amount = req.body.amount;
 	let date = req.body.date;
 
@@ -15,7 +16,7 @@ exports.saveTransaction = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "INSERT INTO transaction (users_id_service,users_id_ranter,amount,is_active,created_by) VALUES (?, ?, ?, 1, ?)";
+    var sql = "INSERT INTO transaction (users_id_service,users_id_ranter,payment_chanal_id,amount,is_active,created_by) VALUES (?, ?,?, ?, 1, ?)";
     var sql1 = "SELECT id FROM transaction WHERE users_id_service=? AND users_id_ranter =? AND amount= ? ORDER BY id DESC LIMIT 1 ";
     var sql2 = "INSERT INTO transaction_detail (drone_id,users_id_service,users_id_ranter,transaction_id,datetime,price,is_active,created_by) VALUES (?, ?, ?, ?, ?, ?, 1, ?)";
     var sql3 = "INSERT INTO informations (adress,area_size,name_plants,size_plants,is_active,created_by) VALUES (?, ?, ?, ?, 1, ?)";
@@ -23,7 +24,7 @@ exports.saveTransaction = function (req,res) {
     var sql5 = "UPDATE transaction_detail SET informations_id=? WHERE drone_id=? AND users_id_service=? AND  users_id_ranter=? AND  transaction_id=? ";
     
 
-    con.query(sql,[users_id_service,users_id_ranter,amount,users_id_service],function(err, result){
+    con.query(sql,[users_id_service,users_id_ranter,payment_chanal_id,amount,users_id_service],function(err, result){
         if (err) throw err;
         con.query(sql1,[users_id_service,users_id_ranter,amount],function(err, result){
 	        if(result[0]!=null){
@@ -57,6 +58,8 @@ exports.saveTransaction = function (req,res) {
 				
 		        }
 		        //บันทึกลงตาราง work
+		        work.saveWork(users_id_service,users_id_ranter,transactionid);
+		        
 		        //อัพเดทสถานะของโดรน
 	        }
     	});

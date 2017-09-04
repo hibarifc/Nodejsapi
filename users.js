@@ -2,10 +2,27 @@ var mysql = require('mysql');
 /* ฟังก์ชันสำหรับหา user ทั้งหมดในระบบ ในส่วนนี้ผมจะให้ส่งค่า users ทั้งหมดกลับไปเลย */
 
 
-exports.findAll = function(req,res) {
-    return users;
+exports.getUserdetail = function(req,res) {
+    let usersid = req.body.usersid;
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    var sql = "SELECT * FROM users INNER JOIN users_detail ON users.users_detail_id=users_detail.id WHERE users.id = ? AND users.is_active = '1'";
+    con.query(sql,[usersid],function(err,result){
+        if (result[0]!=null){
+            res.json({ ok: true, status : result});
+        }
+        else{
+            res.json({ ok: false, status : "no good"});
+        }
+    });
  };
-/* ฟังก์ชันสำหรับหา user จาก id ในส่วนนี้เราจะวน loop หา users ที่มี id ตามที่ระบุแล้วส่งกลับไป */
+
 exports.getUser = function (req,res) {
     let province_id = req.body.province_id;
     let users_types_id = req.body.users_types_id;
@@ -21,6 +38,9 @@ exports.getUser = function (req,res) {
     con.query(sql,[province_id,users_types_id],function(err, result){
         if (result[0]!=null){
             res.json({ ok: true, status : result});
+        }
+         else{
+            res.json({ ok: false, status : "no good"});
         }
     });
 }
@@ -155,6 +175,9 @@ exports.logOut = function (req,res) {
                  res.json({ ok: true, status : 'logout'});
             });
          }
+          else{
+            res.json({ ok: false, status : "no good"});
+            }
         console.log("user update");
     });
 }

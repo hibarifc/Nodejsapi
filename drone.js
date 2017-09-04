@@ -27,6 +27,8 @@ exports.addDrone = function (req,res) {
     con.query(sql,[users_id,users_id,datetime],function(err, result){
         if (err) throw err;
             console.log("inserted drones ");
+           
+        
     });
     con.query(sql1,[name,size,price,pathpicture,users_id,datetime],function(err, result){
         if (err) throw err;
@@ -43,6 +45,7 @@ exports.addDrone = function (req,res) {
 
         }
     });
+    res.json({ ok: true, status : "Complete"});
 
 }
 
