@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 var work = require('./work');
+var drone = require('./drone');
 
 exports.saveTransaction = function (req,res) {
 	let users_id_service = req.body.users_id_service;
@@ -8,7 +9,9 @@ exports.saveTransaction = function (req,res) {
 	let payment_chanal_id = req.body.payment_chanal_id;
 	let amount = req.body.amount;
 	let date = req.body.date;
-
+	let date = new Date().toLocaleDateString();
+    let time = new Date().toLocaleTimeString();
+    let datetime = date+' '+time;
 
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
@@ -16,15 +19,15 @@ exports.saveTransaction = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "INSERT INTO transaction (users_id_service,users_id_ranter,payment_chanal_id,amount,is_active,created_by) VALUES (?, ?,?, ?, 1, ?)";
+    var sql = "INSERT INTO transaction (users_id_service,users_id_ranter,payment_chanal_id,amount,is_active,created_by,created_at) VALUES (?, ?,?, ?, 1, ?,?)";
     var sql1 = "SELECT id FROM transaction WHERE users_id_service=? AND users_id_ranter =? AND amount= ? ORDER BY id DESC LIMIT 1 ";
-    var sql2 = "INSERT INTO transaction_detail (drone_id,users_id_service,users_id_ranter,transaction_id,datetime,price,is_active,created_by) VALUES (?, ?, ?, ?, ?, ?, 1, ?)";
-    var sql3 = "INSERT INTO informations (adress,area_size,name_plants,size_plants,is_active,created_by) VALUES (?, ?, ?, ?, 1, ?)";
+    var sql2 = "INSERT INTO transaction_detail (drone_id,users_id_service,users_id_ranter,transaction_id,datetime,price,is_active,created_by,created_at) VALUES (?, ?, ?, ?, ?, ?, 1, ?,?)";
+    var sql3 = "INSERT INTO informations (adress,area_size,name_plants,size_plants,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?,?)";
     var sql4 = "SELECT id FROM informations WHERE adress = ? AND area_size=? AND name_plants=? AND size_plants =? AND  created_by=? ORDER BY id DESC LIMIT 1 ";
     var sql5 = "UPDATE transaction_detail SET informations_id=? WHERE drone_id=? AND users_id_service=? AND  users_id_ranter=? AND  transaction_id=? ";
     
 
-    con.query(sql,[users_id_service,users_id_ranter,payment_chanal_id,amount,users_id_service],function(err, result){
+    con.query(sql,[users_id_service,users_id_ranter,payment_chanal_id,amount,users_id_service,datetime],function(err, result){
         if (err) throw err;
         con.query(sql1,[users_id_service,users_id_ranter,amount],function(err, result){
 	        if(result[0]!=null){
@@ -37,11 +40,11 @@ exports.saveTransaction = function (req,res) {
 	        		let size_plants = transaction_detail[i].size_plants;
 	        		let price  = transaction_detail[i].price;
 	        		let date =  transaction_detail[i].date;
-		        	con.query(sql2,[drone_id,users_id_service,users_id_ranter,transactionid,date,price,users_id_service],function(err, result){
+		        	con.query(sql2,[drone_id,users_id_service,users_id_ranter,transactionid,date,price,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql2");
 	    			});
-	    			con.query(sql3,[adress,area_size,name_plants,size_plants,users_id_service],function(err, result){
+	    			con.query(sql3,[adress,area_size,name_plants,size_plants,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql3");
 	    			});
@@ -55,12 +58,14 @@ exports.saveTransaction = function (req,res) {
 
 	        			}
 					});
+					  //อัพเดทสถานะของโดรน
+					drone.upDatedrone(drone_id,'3');
 				
 		        }
 		        //บันทึกลงตาราง work
 		        work.saveWork(users_id_service,users_id_ranter,transactionid);
 		        
-		        //อัพเดทสถานะของโดรน
+		      
 	        }
     	});
     });

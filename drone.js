@@ -67,3 +67,19 @@ exports.getDrone = function (req,res){
     });
 
 }
+
+exports.upDatedrone = function(drone_id,drones_status_id){
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    var sql ="UPDATE drones SET drones_status_id=? WHERE id=?;"
+
+    con.query(sql,[drones_status_id,drone_id],function(err,result){
+         if (err) throw err;
+    })
+}

@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 
+
 exports.saveWork = function (users_id_service,users_id_ranter,transaction_id) {
 	let workstatus_id = '1';
 	let date = new Date().toLocaleDateString();
@@ -37,4 +38,19 @@ exports.getWork = function(req,res){
         }
     });
 
+}
+
+exports.upDatework = function(transactionid){
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    var sql ="UPDATE works SET workstatus_id=2 WHERE id=?";
+    con.query(sql,[transactionid],function(err,result){
+        if (err) throw err;
+            console.log("UPDATE Work comple");
+        
+    });
 }

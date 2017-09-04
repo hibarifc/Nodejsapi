@@ -33,7 +33,6 @@ id,Bangkok,1,system
 ,Narathiwat,1,system
 ,Nong Bua Lamphu,1,system
 ,Nong Khai City,1,system
-,,1,system
 ,Nonthaburi,1,system
 ,Pathum Thani,1,system
 ,Pattani,1,system
@@ -74,5 +73,5 @@ id,Bangkok,1,system
 ,Udon Thani,1,system
 ,Uthai Thani,1,system
 ,Uttaradit,1,system
-,Yala,,
-,Yasothon,,
+,Yala,1,system
+,Yasothon,1,system
