@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 
-exports.savePayment = function (req.res) {
+exports.savePayment = function (req,res) {
 	let transactionid = req.body.transactionid;
 	let payment_status_id = '1';
 
