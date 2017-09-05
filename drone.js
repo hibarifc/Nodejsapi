@@ -64,6 +64,9 @@ exports.getDrone = function (req,res){
         if (result[0]!=null){
             res.json({ ok: true, status : result});
         }
+        else{
+            res.json({ ok: false, status : "not drone"});
+        }
     });
 
 }
