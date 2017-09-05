@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 
-exports.saveWork = function (users_id_service,users_id_ranter,transaction_id) {
+exports.saveWork = function (users_id_service,users_id_ranter,transaction_id,transaction_detail_id) {
 	let workstatus_id = '1';
 	let date = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
@@ -12,9 +12,9 @@ exports.saveWork = function (users_id_service,users_id_ranter,transaction_id) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql ="INSERT INTO works (users_id_service,users_id_ranter,transaction_id,workstatus_id,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?, ?)";
+    var sql ="INSERT INTO works (users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,is_active,created_by,created_at) VALUES (?,?, ?, ?, ?, 1, ?, ?)";
     
-    con.query(sql,[users_id_service,users_id_ranter,transaction_id,workstatus_id,users_id_service,datetime],function(err, result){
+    con.query(sql,[users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,users_id_service,datetime],function(err, result){
         if (err) throw err;
         	console.log("INSERT Work comple");
     });
@@ -40,15 +40,16 @@ exports.getWork = function(req,res){
 
 }
 
-exports.upDatework = function(transactionid){
+exports.upDatework = function(transactionid,transaction_detail_id){
+    console.log(transactionid+' '+transaction_detail_id);
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql ="UPDATE works SET workstatus_id=2 WHERE transaction_id=?";
-    con.query(sql,[transactionid],function(err,result){
+    var sql ="UPDATE works SET workstatus_id=2 WHERE transaction_id=? AND transaction_detail_id = ?";
+    con.query(sql,[transactionid,transaction_detail_id],function(err,result){
         if (err) throw err;
             console.log("UPDATE Work comple");
         

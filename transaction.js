@@ -24,7 +24,7 @@ exports.saveTransaction = function (req,res) {
     var sql3 = "INSERT INTO informations (adress,area_size,name_plants,size_plants,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?,?)";
     var sql4 = "SELECT id FROM informations WHERE adress = ? AND area_size=? AND name_plants=? AND size_plants =? AND  created_by=? ORDER BY id DESC LIMIT 1 ";
     var sql5 = "UPDATE transaction_detail SET informations_id=? WHERE drone_id=? AND users_id_service=? AND  users_id_ranter=? AND  transaction_id=? ";
-    
+    var sql6 = "SELECT id FROM transaction_detail WHERE transaction_id=?";
 
     con.query(sql,[users_id_service,payment_chanal_id,amount,users_id_service,datetime],function(err, result){
         if (err) throw err;
@@ -58,9 +58,16 @@ exports.saveTransaction = function (req,res) {
 
 	        			}
 					});
+					con.query(sql6,[transactionid],function(err,result){
+						if(result[0]!=null){
+							for(i=0;i<result.length;i++)
+								var transaction_detail_id = result[i].id;
+								work.saveWork(users_id_service,users_id_ranter,transactionid,transaction_detail_id);
+						}
+					});
 					  //อัพเดทสถานะของโดรน
 					drone.upDatedrone(drone_id,'3');
-					work.saveWork(users_id_service,users_id_ranter,transactionid);
+					
 				
 		        }
 		        //บันทึกลงตาราง work
