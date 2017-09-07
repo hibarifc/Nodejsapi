@@ -70,6 +70,7 @@ exports.saveTransaction = function (req,res) {
 					
 				
 		        }
+		        res.json({ ok: true, status : "OK"});
 		        //บันทึกลงตาราง work
 		        
 		        
