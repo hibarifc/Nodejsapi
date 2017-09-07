@@ -18,15 +18,14 @@ exports.savePayment = function (req,res) {
         database : process.env.DB_NAME
     });
 
-   	var sql ="SELECT transaction_detail.id,transaction_detail.users_id_service,transaction_detail.users_id_ranter,transaction.payment_chanal_id,transaction.amount FROM transaction INNER JOIN transaction_detail ON transaction.id=transaction_detail.transaction_id WHERE transaction.id = ? AND transaction_detail_id = ?";
+   	var sql ="SELECT transaction_detail.id,transaction_detail.users_id_service,transaction_detail.users_id_ranter,transaction.payment_chanal_id,transaction.amount FROM transaction INNER JOIN transaction_detail ON transaction.id=transaction_detail.transaction_id WHERE transaction.id = ?";
    	var sql1="INSERT INTO payment (transaction_id,transaction_detail_id,payment_status_id,payment_chanal_id,users_id_service,users_id_ranter,amount,is_active, created_by,created_at) VALUES ( ?,?, ?, ?, ?, ?, ?, 1, ?,?)";
     var sql2="SELECT drone_id FROM transaction_detail WHERE transaction_id=?";
     var sql3 ="SELECT firstname,lastname FROM users_detail WHERE id =?";
-    con.query(sql,[transactionid,transaction_detail_id],function(err,result){
+    con.query(sql,[transactionid],function(err,result){
     	if(result[0]!=null){
             var array = result;
             for(i=0;i<array.length;i++){
-                var transaction_detail_id = result[i].id;
         		var users_id_service=result[i].users_id_service;
         		var users_id_ranter =result[i].users_id_ranter;
         		var payment_chanal_id=result[i].payment_chanal_id;
@@ -49,6 +48,13 @@ exports.savePayment = function (req,res) {
                 		});
 
         		});
+
+
+
+
+
+
+
                 // con.query(sql3,[users_id_service],function(err,result){
                 //     if(result[0]!=null){
                 //        fistname_service = result[0].firstname;
