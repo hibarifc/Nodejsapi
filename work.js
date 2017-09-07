@@ -28,10 +28,10 @@ exports.getWork = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql =`  SELECT * FROM thedrones.works
-                INNER JOIN thedrones.transaction_detail
+    var sql =`  SELECT * FROM works
+                INNER JOIN transaction_detail
                 ON works.transaction_detail_id=transaction_detail.id
-                INNER JOIN thedrones.informations ON transaction_detail.informations_id = informations.id
+                INNER JOIN informations ON transaction_detail.informations_id = informations.id
                 WHERE works.users_id_service = ?
                 or works.users_id_ranter =? `;
 
