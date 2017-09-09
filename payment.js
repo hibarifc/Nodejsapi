@@ -5,6 +5,7 @@ var drone = require('./drone');
 exports.savePayment = function (req,res) {
 	let transactionid = req.body.transactionid;
     let transaction_detail_id = req.body.transaction_detail_id;
+    let users_id_ranter1 = req.body.users_id_ranter;
 	let payment_status_id = '1';
 	let date = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
@@ -20,7 +21,7 @@ exports.savePayment = function (req,res) {
 
    	var sql ="SELECT transaction_detail.id,transaction_detail.users_id_service,transaction_detail.users_id_ranter,transaction.payment_chanal_id,transaction.amount FROM transaction INNER JOIN transaction_detail ON transaction.id=transaction_detail.transaction_id WHERE transaction.id = ?";
    	var sql1="INSERT INTO payment (transaction_id,transaction_detail_id,payment_status_id,payment_chanal_id,users_id_service,users_id_ranter,amount,is_active, created_by,created_at) VALUES ( ?,?, ?, ?, ?, ?, ?, 1, ?,?)";
-    var sql2="SELECT drone_id FROM transaction_detail WHERE transaction_id=?";
+    var sql2="SELECT drone_id FROM transaction_detail WHERE transaction_id=? AND users_id_ranter=?";
     var sql3 ="SELECT firstname,lastname FROM users_detail WHERE id =?";
     con.query(sql,[transactionid],function(err,result){
     	if(result[0]!=null){
@@ -37,10 +38,12 @@ exports.savePayment = function (req,res) {
                 		console.log("inserted payment ");
                 		
 
-                		con.query(sql2,[transactionid],function(err,result){
+                		con.query(sql2,[transactionid,users_id_ranter1],function(err,result){
                 			if(result[0]!=null){
                 				for(i=0;i<result.length;i++){
                 					drone.upDatedrone(result[i].drone_id,'2');
+                                    console.log(result[i].drone_id);
+
 
                 				}
 
