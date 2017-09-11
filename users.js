@@ -36,7 +36,7 @@ exports.getUser = function (req,res) {
 
     var sql = "SELECT * FROM users INNER JOIN users_detail ON users.users_detail_id=users_detail.id WHERE users_detail.province_id = ? AND users.users_types_id = ? AND users.is_active='1'";
     con.query(sql,[province_id,users_types_id],function(err, result){
-        if (result!=null){
+        if (result[0]!=null){
             res.json({ ok: true, status : result});
         }
          else{
