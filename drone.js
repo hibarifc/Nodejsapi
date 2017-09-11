@@ -61,11 +61,11 @@ exports.getDrone = function (req,res){
 
     var sql = "SELECT * FROM drones INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id WHERE drones.users_id = ? AND drones.is_active = '1'";
     con.query(sql,[users_id],function(err,result){
-        if (result[0]!=null){
-            res.json({ ok: true, status : result});
+        if (err){
+            res.json({ ok: false, status : err});
         }
         else{
-            res.json({ ok: false, status : "not drone"});
+            res.json({ ok: true, status : result});
         }
     });
 
