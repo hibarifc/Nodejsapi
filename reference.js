@@ -19,7 +19,7 @@ exports.getNationality = function (req,res) {
            ;
         }
     });
-    con.release();
+    con.end();
 }
 
 exports.getProvince = function (req,res) {
@@ -41,7 +41,7 @@ exports.getProvince = function (req,res) {
           
         }
     });
-    con.release();
+    con.end();
 }
 
 exports.getDronestatus = function (req,res) {
@@ -63,7 +63,7 @@ exports.getDronestatus = function (req,res) {
           
         }
     });
-    con.release();
+    con.end();
 }
 
 exports.getPaymentchanal = function (req,res) {
@@ -85,7 +85,7 @@ exports.getPaymentchanal = function (req,res) {
            
         }
     });
-    con.release();
+    con.end();
 }
 
 exports.getPaymentstatus = function (req,res) {
@@ -107,7 +107,7 @@ exports.getPaymentstatus = function (req,res) {
           
         }
     });
-    con.release();
+    con.end();
 }
 
 exports.getUserstype = function (req,res) {
@@ -129,7 +129,7 @@ exports.getUserstype = function (req,res) {
            
         }
     });
-    con.release();
+    con.end();
 }
 
 exports.getWorkstatus = function (req,res) {
@@ -151,5 +151,5 @@ exports.getWorkstatus = function (req,res) {
             
         }
     });
-    con.release();
+    con.end();
 }

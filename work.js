@@ -17,9 +17,8 @@ exports.saveWork = function (users_id_service,users_id_ranter,transaction_id,tra
     con.query(sql,[users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,users_id_service,datetime],function(err, result){
         if (err) throw err;
         	console.log("INSERT Work comple");
-          
     });
-    con.release();
+    con.end();
 }
 
 exports.getWork = function(req,res){
@@ -47,7 +46,7 @@ exports.getWork = function(req,res){
            
         }
     });
-    con.release();
+    con.end();
 
 }
 
@@ -63,8 +62,8 @@ exports.upDatework = function(transactionid,transaction_detail_id){
     con.query(sql,[transactionid,transaction_detail_id],function(err,result){
         if (err) throw err;
             console.log("UPDATE Work comple");
-            con.release();
+            
         
     });
-    con.release();
+    con.end();
 }
