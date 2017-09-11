@@ -24,7 +24,7 @@ exports.savePayment = function (req,res) {
     var sql2="SELECT drone_id FROM transaction_detail WHERE transaction_id=? AND users_id_ranter=?";
     var sql3 ="SELECT firstname,lastname FROM users_detail WHERE id =?";
     con.query(sql,[transactionid,users_id_ranter1],function(err,result){
-    	if(result[0]!=null){
+    	if(result!=null){
             var array = result;
             for(i=0;i<array.length;i++){
         		var users_id_service=result[i].users_id_service;
@@ -38,7 +38,7 @@ exports.savePayment = function (req,res) {
 
 
                 		con.query(sql2,[transactionid,users_id_ranter1],function(err,result){
-                			if(result[0]!=null){
+                			if(result!=null){
                 				for(i=0;i<result.length;i++){
                 					drone.upDatedrone(result[i].drone_id,'2');
                                     console.log(result[i].drone_id);

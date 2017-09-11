@@ -29,7 +29,7 @@ exports.saveTransaction = function (req,res) {
     con.query(sql,[users_id_service,payment_chanal_id,amount,users_id_service,datetime],function(err, result){
         if (err) throw err;
         con.query(sql1,[users_id_service,amount],function(err, result){
-	        if(result[0]!=null){
+	        if(result!=null){
 	        	var transactionid = result[0].id;
 	        	for(i=0;i<transaction_detail.length;i++){
 	        		let users_id_ranter = transaction_detail[i].users_id_ranter;
@@ -49,7 +49,7 @@ exports.saveTransaction = function (req,res) {
 		        		console.log("sql3");
 	    			});
 	    			con.query(sql4,[adress,area_size,name_plants,size_plants,users_id_service],function(err, result){
-	        			if(result[0]!=null){
+	        			if(result!=null){
 	        				let id = result[0].id;
 	        				con.query(sql5,[id,drone_id,users_id_service,users_id_ranter,transactionid],function(err, result){
 	        					if (err) throw err;
@@ -59,7 +59,7 @@ exports.saveTransaction = function (req,res) {
 	        			}
 					});
 					con.query(sql6,[transactionid],function(err,result){
-						if(result[0]!=null){
+						if(result!=null){
 							for(i=0;i<result.length;i++)
 								var transaction_detail_id = result[i].id;
 								work.saveWork(users_id_service,users_id_ranter,transactionid,transaction_detail_id);

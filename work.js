@@ -36,7 +36,7 @@ exports.getWork = function(req,res){
                 or works.users_id_ranter =? `;
 
     con.query(sql,[usersid,usersid],function(err,result){
-    	if (result[0]!=null){
+    	if (result!=null){
             res.json({ ok: true, status : result});
         }
         else{
