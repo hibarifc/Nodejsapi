@@ -63,7 +63,7 @@ exports.reGister = function(req,res){
     var check = "SELECT id from users WHERE username=?";
     var check1 = "SELECT id from users_detail WHERE email=?";
     con.query(check,[username],function(err,result){
-            if (result!=null)
+            if (result[0]!=null)
             {
                 console.log("username Not ready");
                 res.json({ ok: false, status : ' username not ready'});
@@ -123,7 +123,7 @@ exports.logIn = function(req,res){
     var sql4 = "UPDATE users SET users_status_history_id = ? WHERE id = ?";
     con.query(sql,[username,password],function(err,result){
        
-         if (result!=null){
+         if (result[0]!=null){
             let userid = result[0].id;
             let username = result[0].username;
             let type = result[0].users_types_id;
@@ -133,7 +133,7 @@ exports.logIn = function(req,res){
             });
             con.query(sql3,[userid],function(err,result){
 
-                if (result!=null) {
+                if (result[0]!=null) {
                     let historyid = result[0].id;
                     console.log(result[0].id);
                     con.query(sql4,[result[0].id,userid],function(err,result){
@@ -168,7 +168,7 @@ exports.logOut = function (req,res) {
     var sql = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM user_status_history WHERE users_id =? )";
     var sql1 = "UPDATE user_status_history SET logout_time=? WHERE id=?";
     con.query(sql,[userid],function(err,result){
-         if (result!=null) {
+         if (result[0]!=null) {
             var historyid = result[0].id;
             con.query(sql1,[datetime,historyid],function(err,result){
                 console.log("user logout");
@@ -204,7 +204,7 @@ exports.upDateuser = function (req,res) {
     var sql1 = "UPDATE users_detail SET nationality_id=?, province_id=?, firstname=?, lastname=?, pathphoto=?,phone=?, address=?,city=?,postcode=?,passport_number=? WHERE id=?";
 
     con.query(sql,[userid],function(err,result){
-         if (result!=null){
+         if (result[0]!=null){
             var usersdetailid =result[0].users_detail_id;
             con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,phone,address,city,postcode,passport_number,userid],function (err,result) {
                 console.log("updateuserdetail");
