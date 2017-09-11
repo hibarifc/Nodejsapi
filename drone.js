@@ -35,7 +35,7 @@ exports.addDrone = function (req,res) {
             console.log("inserted dronesdetail ");
     });
     con.query(sql2,[users_id],function(err, result){
-        if (result!=null){
+        if (result[0]!=null){
         	var dronesdetailid = result[0].id;
         	console.log(dronesdetailid);
         	con.query(sql3,[dronesdetailid,dronesdetailid],function(err, result){
