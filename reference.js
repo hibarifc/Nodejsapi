@@ -12,11 +12,14 @@ exports.getNationality = function (req,res) {
     con.query(sql,function(err, result){
         if (err){
             res.json({ ok: false, status : err});
+          
         }
         else{
             res.json({ ok: true, status : result});
+           ;
         }
     });
+    con.release();
 }
 
 exports.getProvince = function (req,res) {
@@ -31,11 +34,14 @@ exports.getProvince = function (req,res) {
     con.query(sql,function(err, result){
         if (err){
             res.json({ ok: false, status : err});
+         
         }
         else{
             res.json({ ok: true, status : result});
+          
         }
     });
+    con.release();
 }
 
 exports.getDronestatus = function (req,res) {
@@ -50,11 +56,14 @@ exports.getDronestatus = function (req,res) {
     con.query(sql,function(err, result){
          if (err){
             res.json({ ok: false, status : err});
+         
         }
         else{
             res.json({ ok: true, status : result});
+          
         }
     });
+    con.release();
 }
 
 exports.getPaymentchanal = function (req,res) {
@@ -69,11 +78,14 @@ exports.getPaymentchanal = function (req,res) {
     con.query(sql,function(err, result){
         if (err){
             res.json({ ok: false, status : err});
+      
         }
         else{
             res.json({ ok: true, status : result});
+           
         }
     });
+    con.release();
 }
 
 exports.getPaymentstatus = function (req,res) {
@@ -88,11 +100,14 @@ exports.getPaymentstatus = function (req,res) {
     con.query(sql,function(err, result){
        if (err){
             res.json({ ok: false, status : err});
+         
         }
         else{
             res.json({ ok: true, status : result});
+          
         }
     });
+    con.release();
 }
 
 exports.getUserstype = function (req,res) {
@@ -107,11 +122,14 @@ exports.getUserstype = function (req,res) {
     con.query(sql,function(err, result){
         if (err){
             res.json({ ok: false, status : err});
+            
         }
         else{
             res.json({ ok: true, status : result});
+           
         }
     });
+    con.release();
 }
 
 exports.getWorkstatus = function (req,res) {
@@ -126,9 +144,12 @@ exports.getWorkstatus = function (req,res) {
     con.query(sql,function(err, result){
         if (err){
             res.json({ ok: false, status : err});
+      
         }
         else{
             res.json({ ok: true, status : result});
+            
         }
     });
+    con.release();
 }

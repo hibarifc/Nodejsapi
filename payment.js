@@ -48,8 +48,10 @@ exports.savePayment = function (req,res) {
 
                 			}
                 		});
+                        con.release();
 
         		});
+                con.release();
 
 
 
@@ -73,6 +75,8 @@ exports.savePayment = function (req,res) {
              
             }
     	res.json({ ok: true, status : "OK"});
+        
     	}
     });
+    con.release();
 }

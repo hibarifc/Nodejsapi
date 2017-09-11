@@ -27,13 +27,14 @@ exports.addDrone = function (req,res) {
     con.query(sql,[users_id,users_id,datetime],function(err, result){
         if (err) throw err;
             console.log("inserted drones ");
-           
         
     });
+    con.release();
     con.query(sql1,[name,size,price,pathpicture,users_id,datetime],function(err, result){
         if (err) throw err;
             console.log("inserted dronesdetail ");
     });
+    con.release();
     con.query(sql2,[users_id],function(err, result){
         if (result[0]!=null){
         	var dronesdetailid = result[0].id;
@@ -41,11 +42,14 @@ exports.addDrone = function (req,res) {
         	con.query(sql3,[dronesdetailid,dronesdetailid],function(err, result){
         		if (err) throw err;
             		console.log("Update drones ");
+                    
     		});
+            con.release();
 
         }
     });
     res.json({ ok: true, status : "Complete"});
+    con.release();
 
 }
 
@@ -63,11 +67,14 @@ exports.getDrone = function (req,res){
     con.query(sql,[users_id],function(err,result){
         if (err){
             res.json({ ok: false, status : err});
+          
         }
         else{
             res.json({ ok: true, status : result});
+           
         }
     });
+    con.release();
 
 }
 
@@ -84,5 +91,7 @@ exports.upDatedrone = function(drone_id,drones_status_id){
 
     con.query(sql,[drones_status_id,drone_id],function(err,result){
          if (err) throw err;
-    })
+        
+    });
+    con.release();
 }

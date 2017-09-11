@@ -44,10 +44,12 @@ exports.saveTransaction = function (req,res) {
 		        		if (err) throw err;
 		        		console.log("sql2");
 	    			});
+	    			con.release();
 	    			con.query(sql3,[adress,area_size,name_plants,size_plants,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql3");
 	    			});
+	    			con.release();
 	    			con.query(sql4,[adress,area_size,name_plants,size_plants,users_id_service],function(err, result){
 	        			if(result!=null){
 	        				let id = result[0].id;
@@ -55,9 +57,11 @@ exports.saveTransaction = function (req,res) {
 	        					if (err) throw err;
 	        					console.log("sql5");
     						});
+    						con.release();
 
 	        			}
 					});
+					con.release();
 					con.query(sql6,[transactionid],function(err,result){
 						if(result!=null){
 							for(i=0;i<result.length;i++)
@@ -65,19 +69,23 @@ exports.saveTransaction = function (req,res) {
 								work.saveWork(users_id_service,users_id_ranter,transactionid,transaction_detail_id);
 						}
 					});
+					con.release();
 					  //อัพเดทสถานะของโดรน
 					drone.upDatedrone(drone_id,'3');
 					
 				
 		        }
 		        res.json({ ok: true, status : "OK"});
+		      
 		        //บันทึกลงตาราง work
 		        
 		        
 		      
 	        }
     	});
+    	con.release();
     });
+    con.release();
 }
 
 

@@ -16,11 +16,14 @@ exports.getUserdetail = function(req,res) {
     con.query(sql,[usersid],function(err,result){
         if (result!=null){
             res.json({ ok: true, status : result});
+          
         }
         else{
             res.json({ ok: false, status : "no good"});
+         
         }
     });
+    con.release();
  };
 
 exports.getUser = function (req,res) {
@@ -38,11 +41,14 @@ exports.getUser = function (req,res) {
     con.query(sql,[province_id,users_types_id],function(err, result){
         if (result[0]!=null){
             res.json({ ok: true, status : result});
+         
         }
          else{
             res.json({ ok: false, status : "no good"});
+         
         }
     });
+    con.release();
 }
 
 exports.reGister = function(req,res){
@@ -67,6 +73,7 @@ exports.reGister = function(req,res){
             {
                 console.log("username Not ready");
                 res.json({ ok: false, status : ' username not ready'});
+          
             }
             else{
                 console.log("username is ready");
@@ -74,6 +81,7 @@ exports.reGister = function(req,res){
                     if(result[0]!=null){
                         console.log("email Not ready");
                         res.send({ ok: false, status : ' email not ready'});
+                        
                     }
                     else{
                         console.log("email is ready");
@@ -86,10 +94,12 @@ exports.reGister = function(req,res){
                             if (err) throw err;
                                 console.log("inserted users ");
                         });
+                        con.release();
                         con.query(sql1,[email,datetime],function(err, result){
                             if (err) throw err;
                                 console.log("inserted users_detail");
                         });
+                        con.release();
                         con.query(sql2,[email],function(err, result){
                             console.log(result[0].id);
                             if (err) throw err;
@@ -97,12 +107,16 @@ exports.reGister = function(req,res){
                                     if (err) throw err;
                                       console.log("update comple");
                                 });
+                                con.release();
                         });
                         res.json({ ok: true, status : 'Complete'});
+                        con.release();
                     }
                 });
+                con.release();
             }
     });
+    con.release();
 }
 
 exports.logIn = function(req,res){
@@ -131,6 +145,7 @@ exports.logIn = function(req,res){
                if (err) throw err;
                 console.log("history update");
             });
+            con.release();
             con.query(sql3,[userid],function(err,result){
 
                 if (result[0]!=null) {
@@ -139,18 +154,23 @@ exports.logIn = function(req,res){
                     con.query(sql4,[result[0].id,userid],function(err,result){
                         console.log("user update");
                     });
+                    con.release();
                 }
                 else{
                     console.log('file');
                 }
             });
+            con.release();
             console.log(userid);
             res.json({ ok: true, status : 'login',userid : userid,username : username ,type :type });
+     
          }
          else{
             res.json({ ok: false, status : 'No login'});
+            
          }
     });
+    con.release();
 }
 
 exports.logOut = function (req,res) {
@@ -174,12 +194,14 @@ exports.logOut = function (req,res) {
                 console.log("user logout");
                  res.json({ ok: true, status : 'logout'});
             });
+            con.release();
          }
           else{
             res.json({ ok: false, status : "no good"});
             }
         console.log("user update");
     });
+    con.release();
 }
 
 exports.upDateuser = function (req,res) {
@@ -210,10 +232,12 @@ exports.upDateuser = function (req,res) {
                 console.log("updateuserdetail");
                 res.json({ ok: true, status : 'UpdateComplete'});
             });
+            con.release();
          }
          else{
              res.json({ ok: false, status : 'error'});
          }
     });
+    con.release();
 }
 
