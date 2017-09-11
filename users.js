@@ -232,7 +232,7 @@ exports.upDateuser = function (req,res) {
                 console.log("updateuserdetail");
                 res.json({ ok: true, status : 'UpdateComplete'});
             });
-           
+            con.end();
          }
          else{
              res.json({ ok: false, status : 'error'});

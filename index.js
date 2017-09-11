@@ -1,6 +1,7 @@
 /* โหลด Express มาใช้งาน */
 var app = require('express')();
 var bodyParser = require('body-parser');
+var gcm = require('node-gcm');
 require('dotenv').config();
 var mysql = require('mysql');
 
@@ -10,7 +11,22 @@ var drone = require('./drone');
 var reference = require('./reference');
 var work = require('./work');
 var payment = require('./payment');
+
+const server_key ='AAAAwnJv_gg:APA91bH29kB5EzbJ4cXAZVCWnfR2PWnTrNe3Ejd2M00P3gZDfI-_l9RVbyV_P7hdWowZnGO7RB_eE_sZWDK5HnMdSER2kjUnAn6ax0reO2-b_SMCxJ_qYu_di3IA-BxuMwIWSRGoce3d'
 /* ใช้ port 7777 หรือจะส่งเข้ามาตอนรัน app ก็ได้ */
+
+// var send = (token) => {
+//   let retry_times = 3;
+//   let sender = new gcm.Sender(server_key);
+//   let message = new gcm.Message();
+//   message.addData('title', 'Hello Lady~!');
+//   message.addData('message', 'Hello Beutiful Girl!');
+//   sender.send(message, token, retry_times, (result) => {
+//     console.log('send noti!');
+//   }, (err) => {
+//     console.log('cant send noti T^T');
+//   })
+// }
 var port = process.env.PORT || 80;
 //parse
 app.use(bodyParser.json());
@@ -43,10 +59,11 @@ var con = mysql.createConnection({
   password: process.env.DB_PASSWORD
 });
 
-con.connect(function(err){
-	if(err) throw err;
-		console.log("Connected!")
-})
+// con.connect(function(err){
+// 	if(err) throw err;
+// 		console.log("Connected!")
+// });
+
 
 /* Routing */
 app.get('/', function (req, res) {
@@ -135,7 +152,22 @@ app.post('/payment/savepayment',function(req,res){
     payment.savePayment(req,res);
     console.log("savepayment ");
 });
+//-------------------------test แจ้งเตือน-------------------------------
+// app.post('/open', (req, res) => {
+  
+//   /*insert token to DB*/
+//   let token = req.body.token.registrationId;
+//   console.log(JSON.stringify(token));
+//   send(token);
+// });
+
+// app.get('/send', (req, res) => {
+//   let token = 'XXXXXXXXXXXXX'; //token
+//   send(token);
+//   res.send("send notification");
+// });
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
 app.listen(port, function() {
     console.log('Starting node.js on port ' + port);
 });
+
