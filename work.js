@@ -36,11 +36,11 @@ exports.getWork = function(req,res){
                 or works.users_id_ranter =? `;
 
     con.query(sql,[usersid,usersid],function(err,result){
-    	if (result!=null){
-            res.json({ ok: true, status : result});
+    	 if (err){
+            res.json({ ok: false, status : err});
         }
         else{
-        	res.json({ ok: false, status : "not Work"});
+            res.json({ ok: true, status : result});
         }
     });
 
