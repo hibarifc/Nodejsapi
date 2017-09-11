@@ -94,12 +94,12 @@ exports.reGister = function(req,res){
                             if (err) throw err;
                                 console.log("inserted users ");
                         });
-                        con.release();
+                      
                         con.query(sql1,[email,datetime],function(err, result){
                             if (err) throw err;
                                 console.log("inserted users_detail");
                         });
-                        con.release();
+                   
                         con.query(sql2,[email],function(err, result){
                             console.log(result[0].id);
                             if (err) throw err;
@@ -107,13 +107,13 @@ exports.reGister = function(req,res){
                                     if (err) throw err;
                                       console.log("update comple");
                                 });
-                                con.release();
+                                
                         });
                         res.json({ ok: true, status : 'Complete'});
-                        con.release();
+                      
                     }
                 });
-                con.release();
+               
             }
     });
     con.release();
@@ -194,7 +194,6 @@ exports.logOut = function (req,res) {
                 console.log("user logout");
                  res.json({ ok: true, status : 'logout'});
             });
-            con.release();
          }
           else{
             res.json({ ok: false, status : "no good"});
@@ -232,7 +231,7 @@ exports.upDateuser = function (req,res) {
                 console.log("updateuserdetail");
                 res.json({ ok: true, status : 'UpdateComplete'});
             });
-            con.release();
+           
          }
          else{
              res.json({ ok: false, status : 'error'});
