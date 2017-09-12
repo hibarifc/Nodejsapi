@@ -42,7 +42,7 @@ exports.savePayment = function (req,res) {
                 				for(i=0;i<result.length;i++){
                 					drone.upDatedrone(result[i].drone_id,'2');
                                     console.log(result[i].drone_id);
-                                     con.end();
+                                 
 
 
                 				}

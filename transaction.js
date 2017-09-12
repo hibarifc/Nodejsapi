@@ -32,7 +32,7 @@ exports.saveTransaction = function (req,res) {
 	        if(result!=null){
 	        	var transactionid = result[0].id;
 	        	for(i=0;i<transaction_detail.length;i++){
-	        		
+
 	        		let users_id_ranter = transaction_detail[i].users_id_ranter;
 	        		let drone_id = transaction_detail[i].drones_id;
 	        		let adress =  transaction_detail[i].adress;
@@ -53,12 +53,12 @@ exports.saveTransaction = function (req,res) {
 		        		if (err) throw err;
 		        		console.log("sql2");
 	    			});
-	    			
+
 	    			con.query(sql3,[adress,area_size,name_plants,size_plants,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql3");
 	    			});
-	    		
+
 	    			con.query(sql4,[adress,area_size,name_plants,size_plants,users_id_service],function(err, result){
 	        			if(result!=null){
 	        				let id = result[0].id;
@@ -66,10 +66,10 @@ exports.saveTransaction = function (req,res) {
 	        					if (err) throw err;
 	        					console.log("sql5");
     						});
-    						
+
 	        			}
 					});
-				
+
 					con.query(sql6,[transactionid],function(err,result){
 						if(result!=null){
 							for(i=0;i<result.length;i++)
