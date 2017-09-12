@@ -41,6 +41,14 @@ exports.saveTransaction = function (req,res) {
 	        		let size_plants = transaction_detail[i].size_plants;
 	        		let price  = transaction_detail[i].price;
 	        		let date =  transaction_detail[i].date;
+	        		console.log(users_id_ranter);
+	        		console.log(drone_id);
+	        		console.log(adress);
+	        		console.log(area_size);
+	        		console.log(name_plants);
+	        		console.log(size_plants);
+	        		console.log(price);
+	        		console.log(date);
 		        	con.query(sql2,[drone_id,users_id_service,users_id_ranter,transactionid,date,price,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql2");
