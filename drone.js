@@ -94,3 +94,29 @@ exports.upDatedrone = function(drone_id,drones_status_id){
     });
     con.end();
 }
+
+
+exports.getDroneall = function (req,res){
+    let users_id = req.body.users_id;
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    var sql = "SELECT * FROM drones INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id WHERE drones.users_id = ? AND drones.is_active = '1' ";
+    con.query(sql,[users_id],function(err,result){
+        if (result[0]!=null){
+             res.json({ ok: true, status : result});
+        }
+        else{
+            res.json({ ok: false, status : "not drone emptry"});
+           
+        }
+    });
+    con.end();
+    
+
+}
