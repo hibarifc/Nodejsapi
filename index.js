@@ -102,7 +102,7 @@ app.post('/drone/getdrone',function(req,res){
     drone.getDrone(req,res);
 });
 app.post('/drone/getdroneall',function(req,res){
-    drone.getdroneall(req,res);
+    drone.getDroneall(req,res);
 });
 
 
