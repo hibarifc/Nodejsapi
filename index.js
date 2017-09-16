@@ -104,7 +104,12 @@ app.post('/drone/getdrone',function(req,res){
 app.post('/drone/getdroneall',function(req,res){
     drone.getDroneall(req,res);
 });
-
+app.post('/drone/updatedronedetail',function(req,res){
+    drone.upDatedronedetail(req,res);
+});
+app.post('/drone/deletetdrone',function(req,res){
+    drone.deLetedrone(req,res);
+});
 
 
 // ------------------------------GET REFERENCE---------------------
@@ -149,8 +154,16 @@ app.post('/work/getwork',function(req,res){
     work.getWork(req,res);
     console.log("getwork ");
 });
+app.post('/work/cancelwork',function(req,res){
+    work.canCelwork(req,res);
+    console.log("cancelwork ");
+});
+app.post('/work/completework',function(req,res){
+    work.comPletework(req,res);
+    console.log("comPletework ");
+});
 
-//--------------------------------------------------------------
+//-------------------------payment-----------------------------
 app.post('/payment/savepayment',function(req,res){
     payment.savePayment(req,res);
     console.log("savepayment ");
