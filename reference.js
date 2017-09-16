@@ -7,7 +7,7 @@ exports.getNationality = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,nationality FROM nationality AND is_active = '1'";
+    var sql = "SELECT id,nationality FROM nationality WHERE is_active = '1'";
 
     con.query(sql,function(err, result){
         if (err){
@@ -29,7 +29,7 @@ exports.getProvince = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,province FROM province AND is_active = '1'";
+    var sql = "SELECT id,province FROM province WHERE is_active = '1'";
 
     con.query(sql,function(err, result){
         if (err){
@@ -51,7 +51,7 @@ exports.getDronestatus = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,status FROM drones_status AND is_active = '1'";
+    var sql = "SELECT id,status FROM drones_status WHERE is_active = '1'";
 
     con.query(sql,function(err, result){
          if (err){
@@ -73,7 +73,7 @@ exports.getPaymentchanal = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,chanal FROM payment_chanal AND is_active = '1'";
+    var sql = "SELECT id,chanal FROM payment_chanal WHERE is_active = '1'";
 
     con.query(sql,function(err, result){
         if (err){
@@ -95,7 +95,7 @@ exports.getPaymentstatus = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,status FROM payment_status AND is_active = '1'";
+    var sql = "SELECT id,status FROM payment_status WHERE is_active = '1'";
 
     con.query(sql,function(err, result){
        if (err){
@@ -115,7 +115,7 @@ exports.getUserstype = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,type FROM users_type AND is_active = '1'";
+    var sql = "SELECT id,type FROM users_type WHERE is_active = '1'";
 
     con.query(sql,function(err, result){
         if (err){
@@ -137,7 +137,7 @@ exports.getWorkstatus = function (req,res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,status FROM workstatus AND is_active = '1'";
+    var sql = "SELECT id,status FROM workstatus WHERE is_active = '1'";
 
     con.query(sql,function(err, result){
         if (err){
