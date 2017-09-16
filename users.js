@@ -39,11 +39,9 @@ exports.getUser = function (req,res) {
     con.query(sql,[province_id,users_types_id],function(err, result){
         if (result[0]!=null){
             res.json({ ok: true, status : result});
-         
         }
          else{
             res.json({ ok: false, status : "no good"});
-         
         }
     });
      con.end();
