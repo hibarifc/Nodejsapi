@@ -62,7 +62,12 @@ exports.getDrone = function (req,res){
         database : process.env.DB_NAME
     });
 
-    var sql = "SELECT * FROM drones INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id WHERE drones.users_id = ? AND drones.is_active = '1' AND drones.drones_status_id ='1'";
+    var sql = ` SELECT * FROM drones 
+                INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id 
+                INNER JOIN drones_status ON drones.drones_status_id= drones_status.id
+                WHERE drones.users_id = ? 
+                AND drones.is_active = '1' 
+                AND drones.drones_status_id ='1'`;
     con.query(sql,[users_id],function(err,result){
         if (result[0]!=null){
              res.json({ ok: true, status : result});
@@ -106,7 +111,11 @@ exports.getDroneall = function (req,res){
         database : process.env.DB_NAME
     });
 
-    var sql = "SELECT * FROM drones INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id WHERE drones.users_id = ? AND drones.is_active = '1' ";
+    var sql = ` SELECT * FROM drones
+                INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id
+                INNER JOIN drones_status ON drones.drones_status_id= drones_status.id
+                WHERE drones.users_id = ?
+                AND drones.is_active = '1'`;
     con.query(sql,[users_id],function(err,result){
         if (result[0]!=null){
              res.json({ ok: true, status : result});
@@ -118,5 +127,57 @@ exports.getDroneall = function (req,res){
     });
     con.end();
     
+
+}
+
+exports.upDatedronedetail =function(req,res){
+    let users_id = req.body.users_id;
+    let drone_id = req.body.drone_id;
+    let name = req.body.name;
+    let size = req.body.size;
+    let price = req.body.price;
+    let pathpicture = req.body.pathpicture;
+    let date = new Date().toLocaleDateString();
+    let time = new Date().toLocaleTimeString();
+    let datetime = date+' '+time;
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    sql = `UPDATE drones_detail SET name=?, size=?, price=?,pathpicture=?,updated_by=? WHERE id=?`;
+
+    con.query(sql,[name,size,price,pathpicture,users_id,drone_id],function(err,result){
+        if (err) throw err;
+        console.log('UpdateDronedetail');
+        res.json({ ok: true, status : "UpdateDronedetail"});
+    });
+    con.end();
+
+}
+
+exports.deLetedrone =function(req,res){
+    let users_id = req.body.users_id;
+    let drone_id = req.body.drone_id;
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    sql ="UPDATE drones SET is_active=0,updated_by=? WHERE id=?";
+
+    con.query(sql,[users_id,drone_id],function(err,result){
+        if (err) throw err;
+        console.log('deLetetdronetail');
+        res.json({ ok: true, status : "deLetetdronetail"});
+
+    });
+    con.end();
+
 
 }
