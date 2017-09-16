@@ -77,11 +77,10 @@ exports.saveTransaction = function (req,res) {
 								work.saveWork(users_id_service,users_id_ranter,transactionid,transaction_detail_id);
 						}
 					});
-				
+
 					  //อัพเดทสถานะของโดรน
 					drone.upDatedrone(drone_id,'3');
-					
-				
+
 		        }
 
 		        res.json({ ok: true, status : "OK"});
@@ -93,8 +92,8 @@ exports.saveTransaction = function (req,res) {
 	        }
     	});
 
- 
-    });  
+
+    });
 }
 
 
