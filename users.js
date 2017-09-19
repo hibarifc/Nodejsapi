@@ -171,6 +171,7 @@ exports.logIn = function(req,res){
    
 }
 
+
 exports.logOut = function (req,res) {
     let userid = req.body.userid;
     let date = new Date().toLocaleDateString();
@@ -237,5 +238,24 @@ exports.upDateuser = function (req,res) {
          }
     });
     
+}
+
+exports.addToken = function(req,res){
+    let userid = req.body.userid;
+    let token = req.body.token;
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    var sql="INSERT INTO users_tokendevice (users_id,token,is_active,created_by) VALUES (?,?,1,?)";
+
+    con.query(sql,[usersid,token,usersid],function(err,result){
+        if(err) throw err ;
+        res.json({ ok: true, status : 'Complete'});
+    });
 }
 

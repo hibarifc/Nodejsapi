@@ -93,6 +93,10 @@ app.post('/user/getuser',function(req,res){
     users.getUser(req,res);
 });
 
+app.post('/user/addtoken',function(req,res){
+    users.addToken(req,res);
+});
+
 // ------------------------DRONE-------------------------
 
 app.post('/drone/add',function(req,res){
