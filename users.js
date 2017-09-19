@@ -254,6 +254,7 @@ exports.addToken = function(req,res){
     var sql2="UPDATE users_tokendevice SET token=?  WHERE id=?";
     var sql="INSERT INTO users_tokendevice (users_id,token,is_active,created_by) VALUES (?,?,1,?)";
     con.query(sql1,[usersid],function(err,result){
+        console.log(result);
         if (result!=null){
             con.query(sql2,[token,usersid],function(err,result){
                 if(err) throw err ;
