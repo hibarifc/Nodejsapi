@@ -250,12 +250,28 @@ exports.addToken = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-
+    var sql1="SELECT users_id FROM users_tokendevice where users_id = ?";
+    var sql2="UPDATE users_tokendevice SET token=?  WHERE id=?";
     var sql="INSERT INTO users_tokendevice (users_id,token,is_active,created_by) VALUES (?,?,1,?)";
+    con.query(sql1,[usersid],function(err,result){
+        if (result!=null){
+            con.query(sql2,[token,usersid],function(err,result){
+                if(err) throw err ;
+                    res.json({ ok: true, status : 'updateComplete'});
+                    con.end();
+            });
 
-    con.query(sql,[usersid,token,usersid],function(err,result){
-        if(err) throw err ;
-        res.json({ ok: true, status : 'Complete'});
+        }
+        else{
+        con.query(sql,[usersid,token,usersid],function(err,result){
+            if(err) throw err ;
+                res.json({ ok: true, status : 'Complete'});
+                con.end();
+        });
+
+        }
     });
+
+   
 }
 
