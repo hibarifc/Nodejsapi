@@ -241,7 +241,7 @@ exports.upDateuser = function (req,res) {
 }
 
 exports.addToken = function(req,res){
-    let userid = req.body.usersid;
+    let usersid  = req.body.usersid;
     let token = req.body.token;
 
     var con = mysql.createConnection({
