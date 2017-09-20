@@ -14,7 +14,7 @@ exports.getUserdetail = function(req,res) {
 
     var sql = "SELECT * FROM users INNER JOIN users_detail ON users.users_detail_id=users_detail.id WHERE users.id = ? AND users.is_active = '1'";
     con.query(sql,[usersid],function(err,result){
-        if (result!=null){
+        if (result[0]!=null){
             res.json({ ok: true, status : result});
         }
         else{
@@ -44,7 +44,7 @@ exports.getUser = function (req,res) {
             res.json({ ok: false, status : "no good"});
         }
     });
-     con.end();
+    con.end();
 }
 
 exports.reGister = function(req,res){

@@ -26,13 +26,13 @@ exports.savePayment = function (req,res) {
     var sql3 ="SELECT firstname,lastname FROM users_detail WHERE id =?";
     var sql4 ="SELECT transaction_id,transaction_detail_id FROM payment where transaction_id = ? and transaction_detail_id = ?";
     con.query(sql4,[transactionid,transaction_detail_id],function(err,result){
-        if(result!=null){
+        if(result[0]!=null){
             res.json({ ok: false, status : "YOU CONFRIME"});
             con.end();
         }
         else{
             con.query(sql,[transactionid,users_id_ranter1],function(err,result){
-                if(result!=null){
+                if(result[0]!=null){
                     var array = result;
                     for(i=0;i<array.length;i++){
                         var users_id_service=result[i].users_id_service;
@@ -46,7 +46,7 @@ exports.savePayment = function (req,res) {
 
 
                                 con.query(sql2,[transactionid,users_id_ranter1,transaction_detail_id,drone_id],function(err,result){
-                                    if(result!=null){
+                                    if(result[0]!=null){
                                         for(i=0;i<result.length;i++){
                                             drone.upDatedrone(result[i].drone_id,'2');
                                             console.log(result[i].drone_id);
