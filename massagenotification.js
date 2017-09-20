@@ -22,10 +22,12 @@ exports.sandmassage = function(usersid){
   		password: process.env.DB_PASSWORD
 	});
 
-	var sql="SELECT * FROM users_tokendevice WHERE users_id = 1";
-	con.query(sql,[usersid],function(err, result){
-		
-		console.log(result);
+	var sql = "SELECT * FROM users_tokendevice WHERE users_id = 1";
+
+	
+	
+	con.query(sql,[usersid],function(err,result){
+       	console.log(result);
 		console.log(usersid);
 		if(result!=null)
 		{
@@ -37,7 +39,7 @@ exports.sandmassage = function(usersid){
 			});
 			console.log("sandmassage complete");
 		}
-	});
+    });
 	
 	
 	
