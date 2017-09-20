@@ -95,7 +95,7 @@ exports.upDatedrone = function(drone_id,drones_status_id){
 
     con.query(sql,[drones_status_id,drone_id],function(err,result){
          if (err) throw err;
-        
+        console.log("upDatedrone");
     });
     con.end();
 }

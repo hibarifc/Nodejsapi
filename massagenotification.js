@@ -12,7 +12,7 @@ message.addData('data', { "username": "Satit", "message": "Hello world" });
 message.addData('image', 'http://www.pro.moph.go.th/w54/images/ICT/loadlogomoph.png');
 
 exports.sandmassage = function(usersid){
-	let id = usersid;
+
 	let token;
 	var sender = new gcm.Sender('AAAAwnJv_gg:APA91bF2awph8l2fpkCWpLL-KAhtVFTVI77awA4COlrG9xRylk_7dvkG3c5rTtvNuWt2vKlsJvQvpAx6B2zmpelp0-5d3_O67NehuwYzAyIy8W8sdG1uwwCx8LBO4PlR_cffqVDe05y6');
 	var con = mysql.createConnection({
@@ -22,7 +22,7 @@ exports.sandmassage = function(usersid){
 	});
 
 	sql="SELECT token FROM users_tokendevice where users_id = ?";
-	con.query(sql,[id],function(err,result){
+	con.query(sql,[usersid],function(err,result){
 		console.log(result);
 		if(result!=null)
 		{
@@ -35,7 +35,7 @@ exports.sandmassage = function(usersid){
 			console.log("sandmassage complete");
 		}
 	});
-	con.end();
+	
 	
 	
 }
