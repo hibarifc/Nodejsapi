@@ -1,5 +1,5 @@
-var gcm = require('node-gcm');
 var mysql = require('mysql');
+var gcm = require('node-gcm');
 require('dotenv').config();
 
 
