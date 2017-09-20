@@ -13,8 +13,6 @@ exports.sandmassage = function(usersid){
 	// message.addData('notId', 2);
 	// message.addData('image', 'http://res.cloudinary.com/demo/image/upload/w_133,h_133,c_thumb,g_face/bike.jpg');
 	message.addData('image', 'http://www.pro.moph.go.th/w54/images/ICT/loadlogomoph.png');	
-
-	let token;
 	var sender = new gcm.Sender('AAAAwnJv_gg:APA91bF2awph8l2fpkCWpLL-KAhtVFTVI77awA4COlrG9xRylk_7dvkG3c5rTtvNuWt2vKlsJvQvpAx6B2zmpelp0-5d3_O67NehuwYzAyIy8W8sdG1uwwCx8LBO4PlR_cffqVDe05y6');
 	var con = mysql.createConnection({
   		host: process.env.DB_HOST,
@@ -23,12 +21,9 @@ exports.sandmassage = function(usersid){
 	});
 
 	var sql = "SELECT * FROM users_tokendevice WHERE users_id = 1";
-
-	
-	
 	con.query(sql,function(err,result){
        	console.log(result);
-		console.log(usersid);
+		console.log(err);
 		if(result!=null)
 		{
 			var regTokens = result[0].token;
