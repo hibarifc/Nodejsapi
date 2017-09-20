@@ -27,9 +27,11 @@ exports.sandmassage = function(usersid){
 			message.addData('image', 'http://www.pro.moph.go.th/w54/images/ICT/loadlogomoph.png');	
 
 			var sender = new gcm.Sender('AAAAwnJv_gg:APA91bF2awph8l2fpkCWpLL-KAhtVFTVI77awA4COlrG9xRylk_7dvkG3c5rTtvNuWt2vKlsJvQvpAx6B2zmpelp0-5d3_O67NehuwYzAyIy8W8sdG1uwwCx8LBO4PlR_cffqVDe05y6');
-			console.log(result[0].token);
+			var regTokens = [];
+			regTokens.push(result[0].token);
+			console.log(regTokens);
 
-			sender.send(message, { registrationTokens: result[0].token }, function (err, response) {
+			sender.send(message, { registrationTokens: regTokens }, function (err, response) {
     		if(err) console.error(err);
     		else 	console.log(response); 
     		console.log("sandmassage complete");
