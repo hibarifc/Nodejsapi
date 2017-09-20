@@ -26,7 +26,7 @@ exports.sandmassage = function(usersid){
 
 	
 	
-	con.query(sql,[usersid],function(err,result){
+	con.query(sql,function(err,result){
        	console.log(result);
 		console.log(usersid);
 		if(result!=null)
