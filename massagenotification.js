@@ -21,8 +21,12 @@ exports.sandmassage = function(usersid){
   		user: process.env.DB_USER,
   		password: process.env.DB_PASSWORD
 	});
+	con.connect(function(err){
+	if(err) throw err;
+		console.log("Connected!")
+	});
 
-	var sql="SELECT * FROM users_tokendevice WHERE users_id = ?";
+	var sql="SELECT * FROM users_tokendevice WHERE users_id = 1";
 	con.query(sql,[usersid],function(err, result){
 		console.log(result);
 		if(result!=null)

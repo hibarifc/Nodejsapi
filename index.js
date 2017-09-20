@@ -14,21 +14,6 @@ var reference = require('./reference');
 var work = require('./work');
 var payment = require('./payment');
 
-// const server_key ='AAAAwnJv_gg:APA91bH29kB5EzbJ4cXAZVCWnfR2PWnTrNe3Ejd2M00P3gZDfI-_l9RVbyV_P7hdWowZnGO7RB_eE_sZWDK5HnMdSER2kjUnAn6ax0reO2-b_SMCxJ_qYu_di3IA-BxuMwIWSRGoce3d'
-// /* ใช้ port 7777 หรือจะส่งเข้ามาตอนรัน app ก็ได้ */
-
-// var send = (token) => {
-//   let retry_times = 3;
-//   let sender = new gcm.Sender(server_key);
-//   let message = new gcm.Message();
-//   message.addData('title', 'Hello Lady~!');
-//   message.addData('message', 'Hello Beutiful Girl!');
-//   sender.send(message, token, retry_times, (result) => {
-//     console.log('send noti!');
-//   }, (err) => {
-//     console.log('cant send noti T^T');
-//   })
-// }
 var port = process.env.PORT || 80;
 //parse
 app.use(bodyParser.json());
