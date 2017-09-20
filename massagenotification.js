@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var gcm = require('node-gcm');
-require('dotenv').config();
+
 
 
 exports.sandmassage = function(usersid){
@@ -13,11 +13,13 @@ exports.sandmassage = function(usersid){
 	// message.addData('notId', 2);
 	// message.addData('image', 'http://res.cloudinary.com/demo/image/upload/w_133,h_133,c_thumb,g_face/bike.jpg');
 	message.addData('image', 'http://www.pro.moph.go.th/w54/images/ICT/loadlogomoph.png');	
+
 	var sender = new gcm.Sender('AAAAwnJv_gg:APA91bF2awph8l2fpkCWpLL-KAhtVFTVI77awA4COlrG9xRylk_7dvkG3c5rTtvNuWt2vKlsJvQvpAx6B2zmpelp0-5d3_O67NehuwYzAyIy8W8sdG1uwwCx8LBO4PlR_cffqVDe05y6');
 	var con = mysql.createConnection({
   		host: process.env.DB_HOST,
   		user: process.env.DB_USER,
-  		password: process.env.DB_PASSWORD
+  		password: process.env.DB_PASSWORD,
+  		database : process.env.DB_NAME
 	});
 
 	var sql = "SELECT * FROM users_tokendevice WHERE users_id = 1";
