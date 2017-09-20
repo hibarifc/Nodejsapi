@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var gcm = require('node-gcm');
 require('dotenv').config();
 var mysql = require('mysql');
+var massagenotification = require('./massagenotification');
+
 
 var transaction = require('./transaction');
 var users = require('./users');

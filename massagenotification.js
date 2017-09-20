@@ -1,6 +1,6 @@
 var gcm = require('node-gcm');
 var mysql = require('mysql');
-
+require('dotenv').config();
 
 
 exports.sandmassage = function(usersid){
