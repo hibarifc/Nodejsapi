@@ -24,13 +24,12 @@ exports.sandmassage = function(usersid){
 
 	var sql = "SELECT token FROM users_tokendevice WHERE users_id = ?";
 	con.query(sql,[usersid],function(err,result){
-       	console.log(result);
-		console.log(err);
-		if(result!=null)
+  
+		if(result[0]!=null)
 		{
-			var regTokens = result[0].token;
+			console.log(result[0].token);
 
-			sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+			sender.send(message, { registrationTokens: result[0].token }, function (err, response) {
     		if(err) console.error(err);
     		else 	console.log(response);
 			});
