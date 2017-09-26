@@ -32,14 +32,14 @@ exports.getWork = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql =`  SELECT * FROM works
+    var sql =`   SELECT * FROM works
                 INNER JOIN transaction_detail ON works.transaction_detail_id=transaction_detail.id
                 INNER JOIN informations ON transaction_detail.informations_id = informations.id
                 INNER JOIN workstatus ON works.workstatus_id = workstatus.id
                 WHERE works.users_id_service = ?
-                or works.users_id_ranter =?
-                AND workstatus_id = ? or workstatus_id = ?
-                AND is_active = 1 `;
+                or works.users_id_ranter = ?
+                AND workstatus_id in(? ,?)
+                AND works.is_active = 1 `;
 
     con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
     	 if (result!=null){
