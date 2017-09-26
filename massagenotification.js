@@ -14,7 +14,7 @@ exports.sandmassage = function(usersid,state){
 
 	var sql = "SELECT token FROM users_tokendevice WHERE users_id = ?";
 	con.query(sql,[usersid],function(err,result){
-
+		console.log(err);
 		if(err)
 		{	
 			console.log(err);
