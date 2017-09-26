@@ -42,7 +42,7 @@ exports.saveTransaction = function (req,res) {
 	        		let size_plants = transaction_detail[i].size_plants;
 	        		let price  = transaction_detail[i].price;
 	        		let date =  transaction_detail[i].date;
-	        		massagenotification.sandmassage(users_id_ranter);
+	        		massagenotification.sandmassage(users_id_ranter,1);
 		        	con.query(sql2,[drone_id,users_id_service,users_id_ranter,transactionid,date,price,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql2");
@@ -88,6 +88,38 @@ exports.saveTransaction = function (req,res) {
 
 
     });
+}
+
+exports.updDatedinformation = function(req,res){
+	let transaction_detail_id = req.body.transaction_detail_id;
+	let adress =  req.body.adress;
+	let area_size =  req.body.area_size;
+	let name_plants = req.body.name_plants;
+	let size_plants = req.body.size_plants;
+	let date =  req.body.date;
+	var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+   	var sql="SELECT informations_id FROM transaction_detail where id = ?";
+    var sql2 ="UPDATE informations SET adress=?,area_size=?, name_plants=?,size_plants=? WHERE id=?";
+    con.query(sql,[transaction_detail_id],function(err,result){
+    	if(result[0]!=null){
+    		con.query(sql,[adress,area_size,name_plants,size_plants,result[0].informations_id],function(err,result){
+    			if (err) throw err;
+		        console.log("sql2");
+		        res.json({ ok: true, status : "OK"});
+		        con.end();
+   			 });
+
+    	}
+    	else{
+    		res.json({ ok: false, status : "not ok!!"});
+    	}
+    });
+    
 }
 
 

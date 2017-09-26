@@ -137,7 +137,10 @@ app.post('/transaction/save',function(req,res){
     transaction.saveTransaction(req,res);
     console.log("saveTransaction ");
 });
-
+app.post('/transaction/upddatedinformation',function(req,res){
+    transaction.updDatedinformation(req,res);
+    console.log("updDatedinformation ");
+});
 //-------------------------work----------------------------------
 
 app.post('/work/getwork',function(req,res){

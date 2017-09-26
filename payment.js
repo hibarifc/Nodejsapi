@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var work = require('./work');
 var drone = require('./drone');
+var massagenotification = require('./massagenotification');
 
 exports.savePayment = function (req,res) {
 	let transactionid = req.body.transactionid;
@@ -40,7 +41,9 @@ exports.savePayment = function (req,res) {
                         var payment_chanal_id=result[i].payment_chanal_id;
                         var amount=result[i].amount;
                         work.upDatework(transactionid,transaction_detail_id);
+
                         con.query(sql1,[transactionid,transaction_detail_id,payment_status_id,payment_chanal_id,users_id_service,users_id_ranter,amount,users_id_ranter,datetime],function(err,result){
+                            massagenotification.sandmassage(users_id_service,2);
                             if (err) throw err;
                                 console.log("inserted payment ");
 
