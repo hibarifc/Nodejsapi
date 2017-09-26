@@ -15,9 +15,9 @@ exports.sandmassage = function(usersid,state){
 	var sql = "SELECT token FROM users_tokendevice WHERE users_id = ?";
 	con.query(sql,[usersid],function(err,result){
 
-		if(result[0]!=null)
+		if(err)
 		{	
-			console.log(state);
+			console.log(err);
 			var message = new gcm.Message();
 			if(state==1){
 				message.addData('title', 'แจ้งเตือน');
@@ -52,7 +52,7 @@ exports.sandmassage = function(usersid,state){
 			});
 		}
     });
-	
+	con.end();
 	
 	
 }
