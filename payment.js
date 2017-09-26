@@ -23,7 +23,7 @@ exports.savePayment = function (req,res) {
 
    	var sql ="SELECT transaction_detail.id,transaction_detail.users_id_service,transaction_detail.users_id_ranter,transaction.payment_chanal_id,transaction.amount FROM transaction INNER JOIN transaction_detail ON transaction.id=transaction_detail.transaction_id WHERE transaction.id = ? AND transaction_detail.users_id_ranter=?";
    	var sql1="INSERT INTO payment (transaction_id,transaction_detail_id,payment_status_id,payment_chanal_id,users_id_service,users_id_ranter,amount,is_active, created_by,created_at) VALUES ( ?,?, ?, ?, ?, ?, ?, 1, ?,?)";
-    var sql2="SELECT drone_id FROM transaction_detail WHERE transaction_id=? AND users_id_ranter=? AND transaction_detail_id=? AND drone_id=?";
+    var sql2="SELECT drone_id FROM transaction_detail WHERE transaction_id=? AND users_id_ranter=? AND id=? AND drone_id=?";
     var sql3 ="SELECT firstname,lastname FROM users_detail WHERE id =?";
     var sql4 ="SELECT transaction_id,transaction_detail_id FROM payment where transaction_id = ? and transaction_detail_id = ?";
     con.query(sql4,[transactionid,transaction_detail_id],function(err,result){
@@ -53,7 +53,6 @@ exports.savePayment = function (req,res) {
                                         for(i=0;i<result.length;i++){
                                             drone.upDatedrone(result[i].drone_id,'2');
                                             console.log(result[i].drone_id);
-                                         
 
 
                                         }
