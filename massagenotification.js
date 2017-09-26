@@ -49,6 +49,7 @@ exports.sandmassage = function(usersid,state){
     		if(err) console.error(err);
     		else 	console.log(response); 
     		console.log("sandmassage complete");
+    		con.end();
 			});
 		}
     });
