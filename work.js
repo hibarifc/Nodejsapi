@@ -38,8 +38,8 @@ exports.getWork = function(req,res){
                 INNER JOIN workstatus ON works.workstatus_id = workstatus.id
                 WHERE works.users_id_service = ?
                 or works.users_id_ranter =?
-                AND work.workstatus_id = ? or work.workstatus_id = ?
-                AND work.is_active = '1' `;
+                AND workstatus_id = ? or workstatus_id = ?
+                AND is_active = 1 `;
 
     con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
     	 if (result!=null){
