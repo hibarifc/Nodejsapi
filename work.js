@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var drone = require('./drone');
 
 
 exports.saveWork = function (users_id_service,users_id_ranter,transaction_id,transaction_detail_id) {
@@ -82,12 +83,27 @@ exports.canCelwork = function(req,res){
     });
 
     sql ="UPDATE works SET workstatus_id=3, updated_by=? WHERE id=?";
+    sql1="SELECT transaction_detail_id FROM works where id = ?";
+    sql2="SELECT drone_id FROM transaction_detail where id =?"
 
+    con.query(sql1,[workid],function(err,result){
+    	if(result[0]!=null){
+    		result[0].transaction_detail_id
+    		con.query(sql2,[result[0].transaction_detail_id],function(err,result){
+    			if(result[0]!=null){
+    				drone.upDatedrone(result[0].drone_id,'1');
+    				console.log("updatedrone")
+    			}
+    		});
+
+    	}
+    });
     con.query(sql,[usersid,workid],function(err,result){
         if(err) throw err;
         res.json({ ok: true, status : "cancel Complete"});
+        
     });
-    con.end();
+   
 
 
 }
