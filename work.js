@@ -33,7 +33,7 @@ exports.getWork = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql =`   SELECT * FROM works
+    var sql =`   SELECT works.id,works.users_id_service,works.users_id_ranter,transaction_detail.drone_id,informations.adress,informations.area_size,informations.name_plants,informations.size_plants,workstatus.status,transaction_detail.datetime,transaction_detail.price FROM works
                 INNER JOIN transaction_detail ON works.transaction_detail_id=transaction_detail.id
                 INNER JOIN informations ON transaction_detail.informations_id = informations.id
                 INNER JOIN workstatus ON works.workstatus_id = workstatus.id
