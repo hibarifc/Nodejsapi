@@ -37,11 +37,11 @@ exports.getWork = function(req,res){
                 INNER JOIN transaction_detail ON works.transaction_detail_id=transaction_detail.id
                 INNER JOIN informations ON transaction_detail.informations_id = informations.id
                 INNER JOIN workstatus ON works.workstatus_id = workstatus.id
-                WHERE workstatus_id in(?,?)
-                AND works.users_id_service = ?
-                OR works.users_id_ranter = ?`;
+                WHERE works.users_id_service = ?
+                OR works.users_id_ranter = ?
+                HAVING works.workstatus_id in(?,?)`;
 
-    con.query(sql,[workstatus_id1,workstatus_id2,usersid,usersid],function(err,result){
+    con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
     	 if (result!=null){
             res.json({ ok: true, status : result});
         }
