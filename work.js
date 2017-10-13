@@ -33,16 +33,15 @@ exports.getWork = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql =`   SELECT works.id,works.transaction_id,works.transaction_detail_id,works.users_id_service,works.users_id_ranter,transaction_detail.drone_id,informations.adress,informations.area_size,informations.name_plants,informations.size_plants,workstatus.status,transaction_detail.datetime,transaction_detail.price FROM works
+    var sql =`  SELECT works.id,works.workstatus_id,works.transaction_id,works.transaction_detail_id,works.users_id_service,works.users_id_ranter,transaction_detail.drone_id,informations.adress,informations.area_size,informations.name_plants,informations.size_plants,workstatus.status,transaction_detail.datetime,transaction_detail.price FROM works
                 INNER JOIN transaction_detail ON works.transaction_detail_id=transaction_detail.id
                 INNER JOIN informations ON transaction_detail.informations_id = informations.id
                 INNER JOIN workstatus ON works.workstatus_id = workstatus.id
-                WHERE works.users_id_service = ?
-                or works.users_id_ranter = ?
-                AND workstatus_id in(? ,?)
-                AND works.is_active = 1 `;
+                WHERE workstatus_id in(?,?)
+                AND works.users_id_service = ?
+                OR works.users_id_ranter = ?`;
 
-    con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
+    con.query(sql,[workstatus_id1,workstatus_id2,usersid,usersid],function(err,result){
     	 if (result!=null){
             res.json({ ok: true, status : result});
         }
