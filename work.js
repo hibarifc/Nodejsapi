@@ -39,7 +39,8 @@ exports.getWork = function(req,res){
                 INNER JOIN workstatus ON works.workstatus_id = workstatus.id
                 WHERE works.users_id_service = ?
                 OR works.users_id_ranter = ?
-                HAVING works.workstatus_id in(?,?)`;
+                HAVING works.workstatus_id in(?,?)
+                order by works.workstatus_id asc`;
 
     con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
     	 if (result!=null){
