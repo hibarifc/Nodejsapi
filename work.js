@@ -128,11 +128,11 @@ exports.comPletework = function(req,res){
     });
 
 	sql ="UPDATE works SET workstatus_id=4, updated_by=? WHERE id=?";
-	sql = "INSERT INTO works_review (users_id_ranter,works_id,rating,review,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?, ?)";
+	sql1 = "INSERT INTO works_review (users_id_ranter,works_id,rating,review,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?, ?)";
 	con.query(sql,[usersid,workid],function(err,result){
         if(err) throw err;
     });
-    con.query(sql,[users_id_ranter,workid,rating,review,users_id_service,datetime],function(err,result){
+    con.query(sql1,[users_id_ranter,workid,rating,review,users_id_service,datetime],function(err,result){
     	if(err) throw err;
         res.json({ ok: true, status : "comPletework Complete"});
     });
