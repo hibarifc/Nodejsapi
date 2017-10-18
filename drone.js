@@ -111,7 +111,7 @@ exports.getDroneall = function (req,res){
         database : process.env.DB_NAME
     });
 
-    var sql = ` SELECT * FROM drones
+    var sql = ` SELECT drones.id,drones.users_id,drones.drones_detail_id,drones.drones_status_id,drones_detail.name,drones_detail.size,drones_detail.price,drones_status.status FROM drones
                 INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id
                 INNER JOIN drones_status ON drones.drones_status_id= drones_status.id
                 WHERE drones.users_id = ?
