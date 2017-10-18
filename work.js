@@ -129,14 +129,25 @@ exports.comPletework = function(req,res){
 
 	sql ="UPDATE works SET workstatus_id=4, updated_by=? WHERE id=?";
 	sql1 = "INSERT INTO works_review (users_id_ranter,works_id,rating,review,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?, ?)";
-	con.query(sql,[usersid,workid],function(err,result){
+	sql2=`SELECT transaction_detail.drone_id from works 
+            inner join  transaction_detail on works.transaction_detail_id= transaction_detail.id
+            where works.id = ?`
+    con.query(sql,[usersid,workid],function(err,result){
         if(err) throw err;
     });
     con.query(sql1,[users_id_ranter,workid,rating,review,users_id_service,datetime],function(err,result){
     	if(err) throw err;
         res.json({ ok: true, status : "comPletework Complete"});
+        
     });
-    con.end();
+    con.query(sql2,[workid],function(err,result){
+        if(result[0]!=null){
+           var droneid = result[0].drone_id;
+           drone.upDatedrone(droneid,'1');
+        }
+    });
+
+
 
 
 }
