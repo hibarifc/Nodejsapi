@@ -276,3 +276,43 @@ exports.addToken = function(req,res){
    
 }
 
+exports.getUserall = function(req,res){
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    var sql=`SELECT users.id,users.username,users.password,users.is_active,users_detail.nationality_id,users_detail.province_id,users_detail.firstname,users_detail.lastname,users_detail.email,users_detail.phone,users_detail.address,users_detail.city,users_detail.postcode,users_detail.passport_number,users_type.type,users.users_types_id FROM users 
+              INNER JOIN users_detail on users_detail.id = users.users_detail_id
+              INNER JOIN users_type on users_type.id = users.users_types_id`;
+
+    con.query(sql,function(err,result){
+        if (result[0]!=null){
+            res.json({ ok: true, status : result});
+        }
+        else{
+            res.json({ ok: false, status : "no good"});
+        }
+        con.end();
+    });
+}
+
+exports.deLeteuser = function(req,res){
+    var usersid = req.body.usersid;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    var sql = `UPDATE users SET is_active='0' WHERE id=?`;
+    con.query(sql,[usersid],function(err,result){
+        if(err) throw err ;
+                res.json({ ok: true, status : 'Complete'});
+                con.end();
+    });
+
+
+}
+

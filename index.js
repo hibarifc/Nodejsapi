@@ -82,6 +82,12 @@ app.post('/user/getuser',function(req,res){
 app.post('/user/addtoken',function(req,res){
     users.addToken(req,res);
 });
+app.get('/user/getuserall',function(req,res){
+    users.getUserall(req,res);
+});
+app.get('/user/deleteuser',function(req,res){
+    users.deLeteuser(req,res);
+});
 
 // ------------------------DRONE-------------------------
 
@@ -154,6 +160,10 @@ app.post('/work/cancelwork',function(req,res){
 app.post('/work/completework',function(req,res){
     work.comPletework(req,res);
     console.log("comPletework ");
+});
+app.post('/work/getworkreview',function(req,res){
+    work.getWorkreview(req,res);
+    console.log("getWorkreview ");
 });
 
 //-------------------------payment-----------------------------

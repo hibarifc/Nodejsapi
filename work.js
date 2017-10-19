@@ -151,3 +151,20 @@ exports.comPletework = function(req,res){
 
 
 }
+exports.getWorkreview = function(res,req){
+    var users_id_ranter = req.body.users_id_ranter;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    sql="SELECT * FROM works_review where users_id_ranter = ?order by rating DESC";
+
+    con.query(sql,[users_id_ranter],function(err,result){
+        if(err) throw err;
+        res.json({ ok: true, status : result});
+        con.end();
+    });
+
+}
