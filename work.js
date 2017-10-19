@@ -152,7 +152,7 @@ exports.comPletework = function(req,res){
 
 }
 exports.getWorkreview = function(res,req){
-    var users_id_ranter = req.body.users_id_ranter;
+    let users_id_ranter = req.body.users_id_ranter;
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
