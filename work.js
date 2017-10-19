@@ -132,7 +132,7 @@ exports.comPletework = function(req,res){
 	sql2=`SELECT transaction_detail.drone_id from works 
             inner join  transaction_detail on works.transaction_detail_id= transaction_detail.id
             where works.id = ?`
-    con.query(sql,[usersid,workid],function(err,result){
+    con.query(sql,[users_id_service,workid],function(err,result){
         if(err) throw err;
     });
     con.query(sql1,[users_id_ranter,workid,rating,review,users_id_service,datetime],function(err,result){
