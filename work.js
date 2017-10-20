@@ -159,7 +159,7 @@ exports.getWorkreview = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    sql=`SELECT works_review.id,works_review.users_id_ranter,works_review.works_id,works_review.rating,AVG(works_review.rating),works_review.review,users_detail.firstname,users_detail.lastname FROM works_review
+    sql=`SELECT works_review.id,works_review.users_id_ranter,works_review.works_id,works_review.rating,AVG(works_review.rating)as ratingavg,works_review.review,users_detail.firstname,users_detail.lastname FROM works_review
         inner join works on works_review.works_id = works.id
         inner join users_detail on works.users_id_service = users_detail.id
         where works_review.users_id_ranter = '?' order by rating DESC`;
