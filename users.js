@@ -35,7 +35,12 @@ exports.getUser = function (req,res) {
         database : process.env.DB_NAME
     });
 
-    var sql = "SELECT * FROM users INNER JOIN users_detail ON users.users_detail_id=users_detail.id WHERE users_detail.province_id = ? AND users.users_types_id = ? AND users.is_active='1'";
+    var sql = ` SELECT users.*,users_detail.*,avg(works_review.rating)as ratingavg  FROM x0uj9ob35gmn6laq.users 
+                INNER JOIN x0uj9ob35gmn6laq.users_detail ON users.users_detail_id=users_detail.id 
+                inner join x0uj9ob35gmn6laq.works_review on users.id = works_review.users_id_ranter
+                WHERE users_detail.province_id = ? 
+                AND users.users_types_id = ? 
+                AND users.is_active='1'`;
     con.query(sql,[province_id,users_types_id],function(err, result){
         if (result[0]!=null){
             res.json({ ok: true, status : result});
