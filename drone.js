@@ -169,15 +169,27 @@ exports.deLetedrone =function(req,res){
         database : process.env.DB_NAME
     });
 
-    sql ="UPDATE drones SET is_active=0,updated_by=? WHERE id=?";
 
-    con.query(sql,[users_id,drone_id],function(err,result){
-        if (err) throw err;
-        console.log('deLetetdronetail');
-        res.json({ ok: true, status : "deLetetdronetail"});
+    var sql ="UPDATE drones SET is_active=0,updated_by=? WHERE id=?";
+    var sql1 = "SELECT * FROM drones where id =? and drones_status_id = 1";
+    con.query(sql1,[drone_id],function(err,result){
+         if (result[0]!=null){
+               con.query(sql,[users_id,drone_id],function(err,result){
+                    if (err) throw err;
+                    console.log('deLetetdronetail');
+                    res.json({ ok: true, status : "deLetetdronetail"});
+                    con.end();
 
+                });
+        }
+        else{
+            res.json({ ok: false, status : " drone is not emptry"});
+            con.end();
+           
+        }
     });
-    con.end();
+  
+    
 
 
 }
