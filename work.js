@@ -34,15 +34,15 @@ exports.getWork = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql =`  SELECT works.*,users_detail.firstname firstname_r,users_detail.lastname lastname_r,b.firstname firstname_s,b.lastname lastname_s,transaction_detail.drone_id,informations.adress,informations.area_size,informations.name_plants,informations.size_plants,workstatus.status,transaction_detail.datetime,transaction_detail.price FROM works
+    var sql =`  SELECT works.*,users_detail.firstname firstname_r,users_detail.lastname lastname_r,b.firstname firstname_s,b.lastname lastname_s,transaction_detail.drone_id,informations.adress,informations.area_size,informations.name_plants,informations.size_plants,workstatus.status,transaction_detail.datetime,transaction_detail.price FROM .works
                 INNER JOIN transaction_detail ON works.transaction_detail_id=transaction_detail.id
                 INNER JOIN informations ON transaction_detail.informations_id = informations.id
                 INNER JOIN workstatus ON works.workstatus_id = workstatus.id
                 inner join users_detail on works.users_id_ranter = users_detail.id
                 inner join users_detail b on works.users_id_service = b.id
-                WHERE works.users_id_service = 1
-                OR works.users_id_ranter = 1
-                HAVING works.workstatus_id in(3,4)
+                WHERE works.users_id_service = ?
+                OR works.users_id_ranter = ?
+                HAVING works.workstatus_id in(?,?)
                 order by works.workstatus_id asc`;
 
     con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
@@ -92,9 +92,12 @@ exports.canCelwork = function(req,res){
     var sql4="SELECT users_id_service,users_id_ranter FROM works where id = ?";
 
     con.query(sql3,[usersid],function(err,result){
-        if(result[0].users_types_id == 1){
-            con.query(sql4,[workid],function(err,result))
-            massagenotification.sandmassage(users_id_service,3);
+        if (result[0].users_types_id == 1) {
+            con.query(sql4, [workid], function (err, result) {
+                massagenotification.sandmassage(users_id_service, 3);
+            }) 
+           
+        
         }
         else{
             massagenotification.sandmassage(users_id_service,3);
