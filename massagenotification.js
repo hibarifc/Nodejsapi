@@ -28,6 +28,16 @@ exports.sandmassage = function(usersid,state){
 				// message.addData('image', 'http://res.cloudinary.com/demo/image/upload/w_133,h_133,c_thumb,g_face/bike.jpg');
 				message.addData('image', 'http://www.pro.moph.go.th/w54/images/ICT/loadlogomoph.png');	
 			}
+			else if(state==3){
+				message.addData('title', 'แจ้งเตือน');
+				message.addData('message', 'รายการถูกยกเลิก');
+				message.addData('content-available', true);
+				message.addData('data', { "username": "Satit", "message": "Hello world" });
+				// message.addData('notId', 2);
+				// message.addData('image', 'http://res.cloudinary.com/demo/image/upload/w_133,h_133,c_thumb,g_face/bike.jpg');
+				message.addData('image', 'http://www.pro.moph.go.th/w54/images/ICT/loadlogomoph.png');
+
+			}
 			else{
 				message.addData('title', 'แจ้งเตือน');
 				message.addData('message', 'ได้รับการยืนยันแล้ว');
