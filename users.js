@@ -39,7 +39,7 @@ exports.getUser = function (req,res) {
                 INNER JOIN users_detail ON users.users_detail_id=users_detail.id 
                 left join works_review on users.id = works_review.users_id_ranter
                 WHERE users_detail.province_id = ? 
-                AND users.users_types_id = ? 
+                having users.users_types_id = ? 
                 AND users.is_active='1'`;
     con.query(sql,[province_id,users_types_id],function(err, result){
         if (result[0]!=null){
