@@ -1,7 +1,6 @@
 /* โหลด Express มาใช้งาน */
 var app = require('express')();
 var bodyParser = require('body-parser');
-var gcm = require('node-gcm');
 require('dotenv').config();
 var mysql = require('mysql');
 
