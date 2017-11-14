@@ -5,8 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "preinstall": "npm i -g",
-    "start": "pm2 start index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
