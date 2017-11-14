@@ -35,10 +35,10 @@ exports.getUser = function (req,res) {
         database : process.env.DB_NAME
     });
 
-    var sql = ` SELECT users.*,users_detail.*  FROM users 
+    var sql = ` SELECT  users.*,users_detail.* FROM users 
                 INNER JOIN users_detail ON users.users_detail_id=users_detail.id 
                 WHERE users_detail.province_id = ? 
-                having users.users_types_id = ? 
+                AND users.users_types_id = ?
                 AND users.is_active='1'`;
     con.query(sql,[province_id,users_types_id],function(err, result){
         if (result[0]!=null){
