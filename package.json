@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
    "scripts": {
-     "preinstall": "npm install nod-gcm",
+     "preinstall": "npm install node-gcm",
      "start": "node index.js"
    },
   "dependencies": {
