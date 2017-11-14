@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
    "scripts": {
-     "preinstall": "npm install pm2 -g",
+     "preinstall": "npm install pm2 node-gcm -g",
      "start": "pm2 start index.js -i max --attach"
    },
   "dependencies": {
