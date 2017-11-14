@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": true,
    "scripts": {
-     "preinstall": "npm install node-gcm",
-     "start": "node index.js"
+     "preinstall": "npm install node-gcm pm2 -g",
+     "start": "pm2 start index.js -i max --attach"
    },
   "dependencies": {
     "body-parser": "^1.17.2",
