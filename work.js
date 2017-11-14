@@ -96,8 +96,6 @@ exports.canCelwork = function(req,res){
             con.query(sql4, [workid], function (err, result) {
                 massagenotification.sandmassage(users_id_service, 3);
             }) 
-           
-        
         }
         else{
             massagenotification.sandmassage(users_id_service,3);
