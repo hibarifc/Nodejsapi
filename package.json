@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "pm2 start index.js -i max"
+    "start": "pm2 start index.js -i 4"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
