@@ -5,6 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "preinstall": "npm install forever -g",
     "start": "forever start index.js"
   },
   "dependencies": {
