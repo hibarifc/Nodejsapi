@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "forever start index.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
