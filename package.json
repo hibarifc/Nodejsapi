@@ -5,8 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "preinstall": "npm install forever -g",
-    "start": "forever start index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
