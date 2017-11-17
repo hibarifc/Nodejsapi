@@ -87,7 +87,9 @@ app.get('/user/getuserall',function(req,res){
 app.get('/user/deleteuser',function(req,res){
     users.deLeteuser(req,res);
 });
-
+app.post('/user/getusersall',function(req,res){
+    users.getUsersall(req,res);
+});
 // ------------------------DRONE-------------------------
 
 app.post('/drone/add',function(req,res){
@@ -137,6 +139,12 @@ app.get('/reference/workstatus',function(req,res){
     reference.getWorkstatus(req,res);
     console.log("getWorkstatus ");
 });
+app.get('/reference/getprovincedrone',function(req,res){
+    reference.getProvincedrone(req,res);
+    console.log("getProvincedrone ");
+});
+
+
 // -----------------------transaction-------------------------------
 app.post('/transaction/save',function(req,res){
     transaction.saveTransaction(req,res);

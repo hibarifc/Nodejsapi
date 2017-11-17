@@ -22,6 +22,28 @@ exports.getNationality = function (req,res) {
     con.end();
 }
 
+exports.getProvincedrone = function (req, res) {
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    
+    var sql = `SELECT distinct users_detail.province_id,province.province FROM users_detail
+            inner join province on users_detail.province_id = province.id`;
+    
+    con.query(sql, function (err, result) {
+        if (err){
+            res.json({ ok: false, status : err});
+         
+        }
+        else{
+            res.json({ ok: true, status : result});
+          
+        }
+    });
+}
 exports.getProvince = function (req,res) {
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
