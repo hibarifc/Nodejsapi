@@ -28,6 +28,7 @@ exports.getUser = function (req,res) {
     let province_id = req.body.province_id;
     let users_types_id = req.body.users_types_id;
 
+
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
@@ -40,7 +41,57 @@ exports.getUser = function (req,res) {
                 WHERE users_detail.province_id = ? 
                 AND users.users_types_id = ?
                 AND users.is_active='1'`;
+    var sql1 = `SELECT ROUND(avg(rating),2)as avg FROM works_review
+                where users_id_ranter= ?`;
     con.query(sql,[province_id,users_types_id],function(err, result){
+        if (result[0] != null) {
+            var list = result;
+            var j = 0 
+            for (i = 0; i < list.length; i++) {
+                con.query(sql1, [list[i].id], function (err, result) {
+                    var test = result;
+                    i--
+             
+                    var rat = test[0].avg;
+                    console.log(rat);
+                    list[j]["Avg"] = rat;
+                    console.log(i);
+                    if (i == 0) {
+                        res.json({ ok: true, status: list });
+                        con.end();
+                    }
+                    j++
+                    
+                 
+                    
+                });
+               
+            } 
+           
+
+            
+        }
+         else{
+            res.json({ ok: false, status : "no good"});
+        }
+    });
+   
+}
+exports.getUsersall = function (req,res) {
+    let users_types_id = req.body.users_types_id;
+
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    var sql = ` SELECT  users.*,users_detail.* FROM users 
+                INNER JOIN users_detail ON users.users_detail_id=users_detail.id 
+                WHERE users.users_types_id = ?
+                AND users.is_active='1'`;
+    con.query(sql,[users_types_id],function(err, result){
         if (result[0]!=null){
             res.json({ ok: true, status : result});
         }
