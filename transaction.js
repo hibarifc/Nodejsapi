@@ -22,7 +22,7 @@ exports.saveTransaction = function (req,res) {
     var sql = "INSERT INTO transaction (users_id_service,payment_chanal_id,amount,is_active,created_by,created_at) VALUES (?,?, ?, 1, ?,?)";
     var sql1 = "SELECT id FROM transaction WHERE users_id_service=?  AND amount= ? ORDER BY id DESC LIMIT 1 ";
     var sql2 = "INSERT INTO transaction_detail (drone_id,users_id_service,users_id_ranter,transaction_id,datetime,price,is_active,created_by,created_at) VALUES (?, ?, ?, ?, ?, ?, 1, ?,?)";
-    var sql3 = "INSERT INTO informations (adress,area_size,name_plants,size_plants,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?,?)";
+    var sql3 = "INSERT INTO informations (adress,area_size,name_plants,name_chemicals,chemicals,is_active,created_by,created_at) VALUES (?, ?,?,?, ?, 1, ?,?)";
     var sql4 = "SELECT id FROM informations WHERE adress = ? AND area_size=? AND name_plants=? AND size_plants =? AND  created_by=? ORDER BY id DESC LIMIT 1 ";
     var sql5 = "UPDATE transaction_detail SET informations_id=? WHERE drone_id=? AND users_id_service=? AND  users_id_ranter=? AND  transaction_id=? ";
     var sql6 = "SELECT id FROM transaction_detail WHERE transaction_id=?";

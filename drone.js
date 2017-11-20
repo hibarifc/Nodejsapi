@@ -6,7 +6,7 @@ exports.addDrone = function (req,res) {
 	let name = req.body.name;
 	let size = req.body.size;
 	let price = req.body.price;
-	let pathpicture = req.body.pathpicture;
+	let drone_picture = req.body.drone_picture;
 	let status = req.body.status;
 	let date = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
@@ -21,15 +21,16 @@ exports.addDrone = function (req,res) {
     });
 
     var sql = "INSERT INTO drones(users_id,drones_status_id,is_active,created_by,created_at) VALUES (?, 1, 1, ?, ?)";
-   	var sql1 = "INSERT INTO drones_detail(name,size,price,pathpicture,is_active,created_by,created_at) VALUES (?, ?, ?, ?, 1, ?, ?)";
+   	var sql1 = "INSERT INTO drones_detail(name,size,price,is_active,created_by,created_at) VALUES (?, ?, ?, 1, ?, ?)";
    	var sql2 = "SELECT id FROM drones_detail WHERE id =(SELECT MAX(id) FROM drones_detail WHERE created_by = ?)";
-   	var sql3 = "UPDATE drones SET drones_detail_id=? WHERE id=?";
+    var sql3 = "UPDATE drones SET drones_detail_id=? WHERE id=?";
+    var sql4 = "INSERT INTO drones_picture (drone_id,drone_picture,is_active,created_by) VALUES (?,?,'1', 'system')";
     con.query(sql,[users_id,users_id,datetime],function(err, result){
         if (err) throw err;
             console.log("inserted drones ");
     });
    
-    con.query(sql1,[name,size,price,pathpicture,users_id,datetime],function(err, result){
+    con.query(sql1,[name,size,price,users_id,datetime],function(err, result){
         if (err) throw err;
             console.log("inserted dronesdetail ");
     });
@@ -42,7 +43,11 @@ exports.addDrone = function (req,res) {
         		if (err) throw err;
             		console.log("Update drones ");
 
-    		});
+            });
+            con.query(sql4, [dronesdetailid,drone_picture], function (err, result) {
+                if (err) throw err;
+                console.log("inserted picturedrones ");
+            });
             con.end();
 
         }

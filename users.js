@@ -278,15 +278,19 @@ exports.upDateuser = function (req,res) {
     });
     var sql = "SELECT users_detail_id from users WHERE id=?";
     var sql1 = "UPDATE users_detail SET nationality_id=?, province_id=?, firstname=?, lastname=?, pathphoto=?,phone=?, address=?,city=?,postcode=?,passport_number=? WHERE id=?";
-
+    var sql2 = "INSERT INTO users_picture (users_id,users_picture,is_active,created_by) VALUES ('?','?', '1', '?')";
     con.query(sql,[userid],function(err,result){
          if (result[0]!=null){
             var usersdetailid =result[0].users_detail_id;
             con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,phone,address,city,postcode,passport_number,userid],function (err,result) {
                 console.log("updateuserdetail");
-                res.json({ ok: true, status : 'UpdateComplete'});
+                con.query(sql2, [userid, pathphoto, userid], function (err, result) {
+                    if(err) throw err ;
+                });
+                res.json({ ok: true, status: 'UpdateComplete' });
+                con.end();
             });
-            con.end();
+           
          }
          else{
              res.json({ ok: false, status : 'error'});
