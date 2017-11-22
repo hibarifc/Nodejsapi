@@ -12,9 +12,12 @@ exports.saveTransaction = function (req,res) {
 	let amount = req.body.amount;
 	let date = req.body.date;
 	let date1 = new Date().toLocaleDateString();
-    let time = new Date().toLocaleTimeString();
-    let datetime = date1+' '+time;
-    console.log(transaction_detail);
+	let time = new Date().toLocaleTimeString();
+	let datetime = date1 + ' ' + time;
+	console.log(transaction_detail);
+	
+
+
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
@@ -25,11 +28,11 @@ exports.saveTransaction = function (req,res) {
     var sql1 = "SELECT id FROM transaction WHERE users_id_service=?  AND amount= ? ORDER BY id DESC LIMIT 1 ";
     var sql2 = "INSERT INTO transaction_detail (drone_id,users_id_service,users_id_ranter,transaction_id,datetime,price,is_active,created_by,created_at) VALUES (?, ?, ?, ?, ?, ?, 1, ?,?)";
     var sql3 = "INSERT INTO informations (adress,area_size,name_plants,name_chemicals,chemicals,is_active,created_by,created_at) VALUES (?, ?,?,?, ?, 1, ?,?)";
-    var sql4 = "SELECT id FROM informations WHERE adress = ? AND area_size=? AND name_plants=? AND size_plants =? AND  created_by=? ORDER BY id DESC LIMIT 1 ";
+    var sql4 = "SELECT id FROM informations WHERE adress = ? AND area_size=? AND name_plants=? AND name_chemicals =? AND chemicals =? AND  created_by=? ORDER BY id DESC LIMIT 1 ";
     var sql5 = "UPDATE transaction_detail SET informations_id=? WHERE drone_id=? AND users_id_service=? AND  users_id_ranter=? AND  transaction_id=? ";
     var sql6 = "SELECT id FROM transaction_detail WHERE transaction_id=?";
-		var sql7 = "INSERT INTO areas_picture (informations_id,areas_picture,is_active,created_by) VALUES ('?','?','1', '?')"
-		var sql8 = "INSERT INTO maps_picture (informations_id,map_picture,is_active,created_by) VALUES ('?','?','1', '?')"
+	var sql7 = "INSERT INTO areas_picture (informations_id,areas_picture,is_active,created_by) VALUES (?,?,1, ?)";
+	var sql8 = "INSERT INTO maps_picture (informations_id,map_picture,is_active,created_by) VALUES (?,?,1,?)";
 	
 	
 	con.query(sql, [users_id_service, payment_chanal_id, amount, users_id_service, datetime], function (err, result) {
@@ -44,36 +47,36 @@ exports.saveTransaction = function (req,res) {
 	        		let adress =  transaction_detail[i].adress;
 	        		let area_size =  transaction_detail[i].area_size;
 	        		let name_plants = transaction_detail[i].name_plants;
-	        		let size_plants = transaction_detail[i].size_plants;
+							let name_chemicals = transaction_detail[i].name_chemicals;
+							let chemicals = transaction_detail[i].chemicals;
 	        		let price  = transaction_detail[i].price;
-	        		let date =  transaction_detail[i].date;
+							let date = transaction_detail[i].date;
 	        		massagenotification.sandmassage(users_id_ranter,1);
 		        	con.query(sql2,[drone_id,users_id_service,users_id_ranter,transactionid,date,price,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql2");
 	    			});
 
-	    			con.query(sql3,[adress,area_size,name_plants,size_plants,users_id_service,datetime],function(err, result){
+	    			con.query(sql3,[adress,area_size,name_plants,name_chemicals,chemicals,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql3");
 	    			});
 
-	    			con.query(sql4,[adress,area_size,name_plants,size_plants,users_id_service],function(err, result){
-	        			if(result!=null){
+	    			con.query(sql4,[adress,area_size,name_plants,name_chemicals,chemicals,users_id_service],function(err, result){
+	        			if(result[0]!=null){
 	        				let id = result[0].id;
-									con.query(sql5, [id, drone_id, users_id_service, users_id_ranter, transactionid], function (err, result) {
+									con.query(sql5, [id,drone_id, users_id_service, users_id_ranter, transactionid], function (err, result) {
 										if (err) throw err;
 										console.log("sql5");
 									});
-									con.query(sql7, [id, area_picture,users_id_service], function (err, result) {
+									con.query(sql7, [id,area_picture,users_id_service], function (err, result) {
 										if (err) throw err;
 										console.log("sql7");
 									});
-									con.query(sql8, [id, map_picture,users_id_service], function (err, result) {
+									con.query(sql8, [id,map_picture,users_id_service], function (err, result) {
 										if (err) throw err;
 										console.log("sql8");
 									});
-
 	        			}
 					});
 
