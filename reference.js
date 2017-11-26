@@ -31,7 +31,9 @@ exports.getProvincedrone = function (req, res) {
     });
     
     var sql = `SELECT distinct users_detail.province_id,province.province FROM users_detail
-            inner join province on users_detail.province_id = province.id`;
+    inner join province on users_detail.province_id = province.id
+    inner join users on users_detail.id = users.users_detail_id
+    where users.users_types_id = 2`;
     
     con.query(sql, function (err, result) {
         if (err){
