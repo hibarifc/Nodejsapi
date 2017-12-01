@@ -346,15 +346,39 @@ exports.getUserall = function(req,res){
               INNER JOIN users_detail on users_detail.id = users.users_detail_id
               INNER JOIN users_type on users_type.id = users.users_types_id
               where users.users_types_id = 2`;
+    var sql1 = `SELECT ROUND(avg(rating),2)as avg FROM works_review
+              where users_id_ranter= ?`;
 
     con.query(sql,function(err,result){
         if (result[0]!=null){
-            res.json({ ok: true, status : result});
+            var list = result;
+            var j = 0 
+            for (i = 0; i < list.length; i++) {
+                con.query(sql1, [list[i].id], function (err, result) {
+                    
+                    var test = result;
+                    i--
+             
+                    var rat = test[0].avg;
+                    console.log(rat);
+                    list[j]["Avg"] = rat;
+                    console.log(i);
+                    if (i == 0) {
+                        res.json({ ok: true, status: list });
+                        con.end();
+                    }
+                    j++
+                    
+                 
+                    
+                });
+               
+            } 
         }
         else{
             res.json({ ok: false, status : "no good"});
         }
-        con.end();
+       
     });
 }
 

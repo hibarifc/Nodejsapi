@@ -144,6 +144,17 @@ app.get('/reference/getprovincedrone',function(req,res){
     console.log("getProvincedrone ");
 });
 
+app.get('/reference/getplant',function(req,res){
+    reference.getPlant(req,res);
+    console.log("getPlant ");
+});
+app.post('/reference/getchemicals',function(req,res){
+    reference.getChemicals(req,res);
+    console.log("getChemicals ");
+});
+
+
+
 
 // -----------------------transaction-------------------------------
 app.post('/transaction/save',function(req,res){
