@@ -31,8 +31,8 @@ exports.saveTransaction = function (req,res) {
     var sql4 = "SELECT id FROM informations WHERE adress = ? AND area_size=? AND name_plants=? AND name_chemicals =? AND chemicals =? AND  created_by=? ORDER BY id DESC LIMIT 1 ";
     var sql5 = "UPDATE transaction_detail SET informations_id=? WHERE drone_id=? AND users_id_service=? AND  users_id_ranter=? AND  transaction_id=? ";
     var sql6 = "SELECT id FROM transaction_detail WHERE transaction_id=?";
-	var sql7 = "INSERT INTO areas_picture (informations_id,areas_picture,is_active,created_by) VALUES (?,?,1, ?)";
-	var sql8 = "INSERT INTO maps_picture (informations_id,map_picture,is_active,created_by) VALUES (?,?,1,?)";
+		var sql7 = "INSERT INTO areas_picture (informations_id,areas_picture,is_active,created_by) VALUES (?,?,1,?)";
+		var sql8 = "INSERT INTO maps_picture (informations_id,map_picture,is_active,created_by) VALUES (?,?,1,?)";
 	
 	
 	con.query(sql, [users_id_service, payment_chanal_id, amount, users_id_service, datetime], function (err, result) {
@@ -65,17 +65,20 @@ exports.saveTransaction = function (req,res) {
 	    			con.query(sql4,[adress,area_size,name_plants,name_chemicals,chemicals,users_id_service],function(err, result){
 	        			if(result[0]!=null){
 	        				let id = result[0].id;
-									con.query(sql5, [id,drone_id, users_id_service, users_id_ranter, transactionid], function (err, result) {
+									con.query(sql5,[id,drone_id, users_id_service, users_id_ranter, transactionid], function (err, result) {
 										if (err) throw err;
 										console.log("sql5");
 									});
-									con.query(sql7, [id,area_picture,users_id_service], function (err, result) {
+									con.query(sql7,[id,area_picture,users_id_service],function(err, result) {
 										if (err) throw err;
+										console.log(area_picture);
 										console.log("sql7");
+
 									});
-									con.query(sql8, [id,map_picture,users_id_service], function (err, result) {
+									con.query(sql8,[id,map_picture,users_id_service],function(err, result) {
 										if (err) throw err;
 										console.log("sql8");
+										console.log(map_picture);
 									});
 	        			}
 					});
