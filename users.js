@@ -12,10 +12,23 @@ exports.getUserdetail = function(req,res) {
         database : process.env.DB_NAME
     });
 
-    var sql = "SELECT * FROM users INNER JOIN users_detail ON users.users_detail_id=users_detail.id WHERE users.id = ? AND users.is_active = '1'";
+    var sql = `SELECT users.*,users_detail.*,users_picture.users_picture FROM users 
+    INNER JOIN users_detail ON users.users_detail_id=users_detail.id 
+    left join users_picture on users.id = users_picture.users_id
+    WHERE users.id = ?
+    AND users.is_active = '1'`;
     con.query(sql,[usersid],function(err,result){
         if (result[0]!=null){
-            res.json({ ok: true, status : result});
+            var list = result;
+            var j = 0;
+            for (var i = 0; i < result.length; i++){
+                var usersimg = result[j].users_picture ? result[j].users_picture.toString() : null;
+                list[j]["usersimg"] = usersimg;
+                j++
+            }
+            
+
+            res.json({ ok: true, status: list });
         }
         else{
             res.json({ ok: false, status : "no good"});

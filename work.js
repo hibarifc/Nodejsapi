@@ -42,9 +42,9 @@ exports.getWork = function(req,res){
     inner join users_detail b on works.users_id_service = b.id
     left join areas_picture on informations.id = areas_picture.informations_id
     left join maps_picture on informations.id = maps_picture.informations_id
-    WHERE works.users_id_service = 1
-    OR works.users_id_ranter = 1
-    HAVING works.workstatus_id in(1,2)
+    WHERE works.users_id_service = ?
+    OR works.users_id_ranter = ?
+    HAVING works.workstatus_id in(?,?)
     order by works.workstatus_id asc`;
 
     con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
