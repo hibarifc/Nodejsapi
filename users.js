@@ -264,7 +264,8 @@ exports.upDateuser = function (req,res) {
     let province_id =req.body.province_id;
     let firstname =req.body.firstname;
     let lastname= req.body.lastname;
-    let pathphoto =req.body.pathphoto;
+    let pathphoto = req.body.pathphoto;
+    let users_picture = req.body.users_picture;
     let phone =req.body.phone;
     let address =req.body.address;
     let city= req.body.city;
@@ -284,12 +285,13 @@ exports.upDateuser = function (req,res) {
             var usersdetailid =result[0].users_detail_id;
             con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,phone,address,city,postcode,passport_number,userid],function (err,result) {
                 console.log("updateuserdetail");
-                con.query(sql2, [userid, pathphoto, userid], function (err, result) {
-                    if(err) throw err ;
-                });
-                res.json({ ok: true, status: 'UpdateComplete' });
-                con.end();
+             });
+            con.query(sql2, [userid, users_picture, userid], function (err, result) {
+                console.log("InsertPic");
+                
             });
+            res.json({ ok: true, status: 'UpdateComplete' });
+            con.end(); 
            
          }
          else{

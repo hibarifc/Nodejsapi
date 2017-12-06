@@ -116,14 +116,26 @@ exports.getDroneall = function (req,res){
         database : process.env.DB_NAME
     });
 
-    var sql = ` SELECT drones.id,drones.users_id,drones.drones_detail_id,drones.drones_status_id,drones_detail.name,drones_detail.size,drones_detail.price,drones_status.status FROM drones
-                INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id
-                INNER JOIN drones_status ON drones.drones_status_id= drones_status.id
-                WHERE drones.users_id = ?
-                AND drones.is_active = '1'`;
+    var sql = ` SELECT drones.id,drones.users_id,drones_picture.drone_picture,drones.drones_detail_id,drones.drones_status_id,drones_detail.name,drones_detail.size,drones_detail.price,drones_status.status FROM drones
+    INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id
+    INNER JOIN drones_status ON drones.drones_status_id= drones_status.id
+    left join drones_picture on drones.id = drones_picture.drone_id
+    WHERE drones.users_id = ?
+    AND drones.is_active = '1'`;
     con.query(sql,[users_id],function(err,result){
-        if (result[0]!=null){
-             res.json({ ok: true, status : result});
+        if (result[0] != null) {
+            var list = result;
+            var j = 0;
+            for (var i = 0; i < result.length; i++){
+                var droneimg = result[j].drone_picture ? result[j].drone_picture.toString() : null;
+                list[j]["droneimg"] = droneimg;
+                j++
+            }
+            
+
+            res.json({ ok: true, status: list });
+            
+
         }
         else{
             res.json({ ok: false, status : "not drone emptry"});
