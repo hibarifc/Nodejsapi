@@ -12,6 +12,7 @@ var drone = require('./drone');
 var reference = require('./reference');
 var work = require('./work');
 var payment = require('./payment');
+var home = require('./home.js');
 
 var port = process.env.PORT || 7777;
 //parse
@@ -189,22 +190,27 @@ app.post('/payment/savepayment',function(req,res){
     payment.savePayment(req,res);
     console.log("savepayment ");
 });
-//-------------------------test แจ้งเตือน-------------------------------
-// app.post('/open', (req, res) => {
-  
-//   /*insert token to DB*/
-//   let token = req.body.token.registrationId;
-//   console.log(JSON.stringify(token));
-//   send(token);
-// });
-
-// app.get('/send', (req, res) => {
-//   let token = 'XXXXXXXXXXXXX'; //token
-//   send(token);
-//   res.send("send notification");
-// });
-/* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
-app.listen(port, function() {
-    console.log('Starting node.js on port ' + port);
+//------------------------Home-------------------------------------
+app.post('/home/savepicture', function (req, res) {
+    payment.savePicture(req, res);
+    console.log("savePicture ");
 });
+    //-------------------------test แจ้งเตือน-------------------------------
+    // app.post('/open', (req, res) => {
+  
+    //   /*insert token to DB*/
+    //   let token = req.body.token.registrationId;
+    //   console.log(JSON.stringify(token));
+    //   send(token);
+    // });
+
+    // app.get('/send', (req, res) => {
+    //   let token = 'XXXXXXXXXXXXX'; //token
+    //   send(token);
+    //   res.send("send notification");
+    // });
+    /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
+    app.listen(port, function () {
+        console.log('Starting node.js on port ' + port);
+    });
 

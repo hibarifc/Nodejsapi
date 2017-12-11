@@ -53,7 +53,7 @@ exports.savePayment = function (req,res) {
                                         for(i=0;i<result.length;i++){
                                             drone.upDatedrone(result[i].drone_id,'2');
                                             console.log(result[i].drone_id);
-
+                                           
 
                                         }
 
@@ -62,7 +62,7 @@ exports.savePayment = function (req,res) {
                               
 
                         });
-                       
+                        
 
 
 
@@ -85,7 +85,7 @@ exports.savePayment = function (req,res) {
                         // });
                      
                     }
-                res.json({ ok: true, status : "OK"});
+                    res.json({ ok: true, status : "OK"});
                 
                 }
             });

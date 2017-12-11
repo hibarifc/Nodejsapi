@@ -278,6 +278,8 @@ exports.upDateuser = function (req,res) {
     let firstname =req.body.firstname;
     let lastname= req.body.lastname;
     let pathphoto = req.body.pathphoto;
+    let lat = req.body.lat;
+    let lng = req.body.lng;
     let users_picture = req.body.users_picture;
     let phone =req.body.phone;
     let address =req.body.address;
@@ -291,12 +293,12 @@ exports.upDateuser = function (req,res) {
         database : process.env.DB_NAME
     });
     var sql = "SELECT users_detail_id from users WHERE id=?";
-    var sql1 = "UPDATE users_detail SET nationality_id=?, province_id=?, firstname=?, lastname=?, pathphoto=?,phone=?, address=?,city=?,postcode=?,passport_number=? WHERE id=?";
+    var sql1 = "UPDATE users_detail SET nationality_id=?, province_id=?, firstname=?, lastname=?, pathphoto=?,lat=?,lng=?,phone=?, address=?,city=?,postcode=?,passport_number=? WHERE id=?";
     var sql2 = "INSERT INTO users_picture (users_id,users_picture,is_active,created_by) VALUES (?,?,'1',?)";
     con.query(sql,[userid],function(err,result){
          if (result[0]!=null){
             var usersdetailid =result[0].users_detail_id;
-            con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,phone,address,city,postcode,passport_number,userid],function (err,result) {
+            con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,lat,lng,phone,address,city,postcode,passport_number,userid],function (err,result) {
                 console.log("updateuserdetail");
              });
             con.query(sql2,[userid,users_picture,userid],function(err, result){
@@ -358,9 +360,10 @@ exports.getUserall = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql=`SELECT users.id,users.username,users.password,users.is_active,users_detail.nationality_id,users_detail.province_id,users_detail.firstname,users_detail.lastname,users_detail.email,users_detail.phone,users_detail.address,users_detail.city,users_detail.postcode,users_detail.passport_number,users_type.type,users.users_types_id FROM users 
+    var sql=`SELECT users.id,users_picture.users_picture,users.username,users.password,users.is_active,users_detail.nationality_id,users_detail.province_id,users_detail.firstname,users_detail.lastname,users_detail.email,users_detail.phone,users_detail.address,users_detail.city,users_detail.postcode,users_detail.passport_number,users_type.type,users.users_types_id FROM users 
               INNER JOIN users_detail on users_detail.id = users.users_detail_id
               INNER JOIN users_type on users_type.id = users.users_types_id
+              left join users_picture on users.id = users_picture.users_id
               where users.users_types_id = 2`;
     var sql1 = `SELECT ROUND(avg(rating),2)as avg FROM works_review
               where users_id_ranter= ?`;
@@ -370,11 +373,13 @@ exports.getUserall = function(req,res){
             var list = result;
             var j = 0 
             for (i = 0; i < list.length; i++) {
+                var usersimg = result[j].users_picture ? result[j].users_picture.toString() : null;
+                list[j]["usersimg"] = usersimg;
                 con.query(sql1, [list[i].id], function (err, result) {
                     
                     var test = result;
                     i--
-             
+                   
                     var rat = test[0].avg;
                     console.log(rat);
                     list[j]["Avg"] = rat;
