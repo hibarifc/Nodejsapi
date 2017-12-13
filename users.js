@@ -49,8 +49,9 @@ exports.getUser = function (req,res) {
         database : process.env.DB_NAME
     });
 
-    var sql = ` SELECT  users.*,users_detail.* FROM users 
+    var sql = ` SELECT  users.*,users_detail.*,users_picture.users_picture FROM users 
                 INNER JOIN users_detail ON users.users_detail_id=users_detail.id 
+                left join users_picture on users.id = users_picture.users_id
                 WHERE users_detail.province_id = ? 
                 AND users.users_types_id = ?
                 AND users.is_active='1'`;
@@ -61,6 +62,8 @@ exports.getUser = function (req,res) {
             var list = result;
             var j = 0 
             for (i = 0; i < list.length; i++) {
+                var usersimg = result[i].users_picture ? result[i].users_picture.toString() : null;
+                list[i]["usersimg"] = usersimg;
                 con.query(sql1, [list[i].id], function (err, result) {
                     var test = result;
                     i--
@@ -371,19 +374,20 @@ exports.getUserall = function(req,res){
     con.query(sql,function(err,result){
         if (result[0]!=null){
             var list = result;
-            var j = 0 
+            var j = 0
             for (i = 0; i < list.length; i++) {
-                var usersimg = result[j].users_picture ? result[j].users_picture.toString() : null;
-                list[j]["usersimg"] = usersimg;
+                var usersimg = result[i].users_picture ? result[i].users_picture.toString() : null;
+                list[i]["usersimg"] = usersimg;
+                console.log(j);
                 con.query(sql1, [list[i].id], function (err, result) {
                     
                     var test = result;
                     i--
                    
                     var rat = test[0].avg;
-                    console.log(rat);
+                    
                     list[j]["Avg"] = rat;
-                    console.log(i);
+                   
                     if (i == 0) {
                         res.json({ ok: true, status: list });
                         con.end();
