@@ -298,20 +298,31 @@ exports.upDateuser = function (req,res) {
     var sql = "SELECT users_detail_id from users WHERE id=?";
     var sql1 = "UPDATE users_detail SET nationality_id=?, province_id=?, firstname=?, lastname=?, pathphoto=?,lat=?,lng=?,phone=?, address=?,city=?,postcode=?,passport_number=? WHERE id=?";
     var sql2 = "INSERT INTO users_picture (users_id,users_picture,is_active,created_by) VALUES (?,?,'1',?)";
+    var sql3 = "SELECT * FROM users_picture where users_id = ?"
+    var sql4 = "UPDATE users_picture SET users_picture = ? where id = ? "
     con.query(sql,[userid],function(err,result){
          if (result[0]!=null){
             var usersdetailid =result[0].users_detail_id;
             con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,lat,lng,phone,address,city,postcode,passport_number,userid],function (err,result) {
                 console.log("updateuserdetail");
              });
-            con.query(sql2,[userid,users_picture,userid],function(err, result){
-                console.log("InsertPic");
-                con.end(); 
-                res.json({ ok: true, status: 'UpdateComplete' });
+            con.query(sql3, [userid], function (err, result) {
+                if (result != null) {
+                    con.query(sql4, [users_picture, userid], function (err, result) {
+                        console.log("UPDATEPic");
+                        res.json({ ok: true, status: 'UpdateComplete' });
+                        con.end(); 
+                    });
+                }
+                else {
+                    con.query(sql2,[userid,users_picture,userid],function(err, result){
+                        console.log("InsertPic");
+                        con.end(); 
+                        res.json({ ok: true, status: 'UpdateComplete' });
+                    });
+                    
+                }
             });
-           
-            
-           
          }
          else{
              res.json({ ok: false, status : 'error'});
