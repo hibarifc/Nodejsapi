@@ -308,7 +308,7 @@ exports.upDateuser = function (req,res) {
              });
             con.query(sql3, [userid], function (err, result) {
                 if (result != null) {
-                    con.query(sql4, [users_picture, userid,userid], function (err, result) {
+                    con.query(sql4, [users_picture, result[0].id,userid], function (err, result) {
                         console.log("UPDATEPic");
                         console.log(users_picture);
                         console.log(userid);
