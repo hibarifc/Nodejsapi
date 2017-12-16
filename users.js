@@ -310,6 +310,7 @@ exports.upDateuser = function (req,res) {
                 if (result != null) {
                     con.query(sql4, [users_picture, userid,userid], function (err, result) {
                         console.log("UPDATEPic");
+                        console.log(users_picture);
                         res.json({ ok: true, status: 'UpdateComplete' });
                         con.end(); 
                     });
