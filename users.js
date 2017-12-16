@@ -299,7 +299,7 @@ exports.upDateuser = function (req,res) {
     var sql1 = "UPDATE users_detail SET nationality_id=?, province_id=?, firstname=?, lastname=?, pathphoto=?,lat=?,lng=?,phone=?, address=?,city=?,postcode=?,passport_number=? WHERE id=?";
     var sql2 = "INSERT INTO users_picture (users_id,users_picture,is_active,created_by) VALUES (?,?,'1',?)";
     var sql3 = "SELECT * FROM users_picture where users_id = ?"
-    var sql4 = "UPDATE users_picture SET users_picture = ? updated_by=? where id = ? "
+    var sql4 = "UPDATE users_picture SET users_picture=?,updated_by=? where id=? "
     con.query(sql,[userid],function(err,result){
          if (result[0]!=null){
             var usersdetailid =result[0].users_detail_id;
