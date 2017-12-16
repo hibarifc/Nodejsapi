@@ -312,8 +312,6 @@ exports.upDateuser = function (req,res) {
                         console.log("UPDATEPic");
                         console.log(users_picture);
                         console.log(userid);
-                        console.log(result[0]);
-
                         res.json({ ok: true, status: 'UpdateComplete' });
                         con.end(); 
                     });
