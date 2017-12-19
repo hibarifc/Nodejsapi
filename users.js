@@ -203,6 +203,9 @@ exports.logIn = function(req,res){
     var sql2 = "INSERT INTO user_status_history(users_id,login_time,is_active,created_by,created_at) VALUES (?,?,1,'system',?)";
     var sql3 = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM user_status_history WHERE users_id =? )";
     var sql4 = "UPDATE users SET users_status_history_id = ? WHERE id = ?";
+    var sql5 = `SELECT users_detail.lat,users_detail.lng FROM users 
+                left join users_detail on users.users_detail_id = users_detail.id
+                where users.id = ?`;
     con.query(sql,[username,password],function(err,result){
        
          if (result[0]!=null){
@@ -228,10 +231,13 @@ exports.logIn = function(req,res){
                 else{
                     console.log('file');
                 }
-            });
+             });
+             con.query(sql5, [userid], function (err, result) {
+                res.json({ ok: true, status : 'login',userid : userid,username : username ,type :type,result:result });
+             }); 
            
             console.log(userid);
-            res.json({ ok: true, status : 'login',userid : userid,username : username ,type :type });
+           
             
          }
          else{
