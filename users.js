@@ -233,7 +233,7 @@ exports.logIn = function(req,res){
                 }
              });
              con.query(sql5, [userid], function (err, result) {
-                res.json({ ok: true, status : 'login',userid : userid,username : username ,type :type,result:result });
+                res.json({ ok: true, status : 'login',userid : userid,username : username ,type :type,lat:result[0].lat,lng:result[0].lng });
              }); 
            
             console.log(userid);
