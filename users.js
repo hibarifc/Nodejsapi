@@ -388,7 +388,9 @@ exports.getUserall = function(req,res){
               left join users_picture on users.id = users_picture.users_id
               where users.users_types_id = 2`;
     var sql1 = `SELECT ROUND(avg(rating),2)as avg FROM works_review
-              where users_id_ranter= ?`;
+                inner join works on works_review.works_id = works.id
+                inner join users_detail on works.users_id_service = users_detail.id
+                where works.users_id_service = '?'`;
 
     con.query(sql,function(err,result){
         if (result[0]!=null){
