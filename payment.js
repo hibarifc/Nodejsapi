@@ -43,7 +43,7 @@ exports.savePayment = function (req,res) {
                         work.upDatework(transactionid,transaction_detail_id);
 
                         con.query(sql1,[transactionid,transaction_detail_id,payment_status_id,payment_chanal_id,users_id_service,users_id_ranter,amount,users_id_ranter,datetime],function(err,result){
-                            massagenotification.sandmassage(users_id_service,2);
+                            massagenotification.sandmassage(users_id_ranter,2);
                             if (err) throw err;
                                 console.log("inserted payment ");
 
