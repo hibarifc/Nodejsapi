@@ -53,7 +53,7 @@ exports.saveTransaction = function (req,res) {
 							let chemicals = transaction_detail[i].chemicals;
 	        		let price  = transaction_detail[i].price;
 							let date = transaction_detail[i].date;
-	        		massagenotification.sandmassage(users_id_ranter,1);
+	        		massagenotification.sandmassage(users_id_service,1);
 		        	con.query(sql2,[drone_id,users_id_service,users_id_ranter,users_id_sell,users_name_ranter,transactionid,date,price,users_id_service,datetime],function(err, result){
 		        		if (err) throw err;
 		        		console.log("sql2");
