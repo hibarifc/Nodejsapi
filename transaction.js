@@ -13,7 +13,7 @@ exports.saveTransaction = function (req,res) {
 	let date1 = new Date().toLocaleDateString();
 	let time = new Date().toLocaleTimeString();
 	let datetime = date1 + ' ' + time;
-	console.log(transaction_detail);
+	console.log(area_picture);
 	
 
 
