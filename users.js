@@ -383,7 +383,7 @@ exports.getUserall = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql=`SELECT users.id,users_picture.users_picture,users.username,users.password,users.is_active,users_detail.nationality_id,users_detail.province_id,users_detail.firstname,users_detail.lastname,users_detail.email,users_detail.phone,users_detail.address,users_detail.city,users_detail.postcode,users_detail.passport_number,users_type.type,users.users_types_id FROM users 
+    var sql=`SELECT users.id,users_picture.users_picture,users.username,users.password,users.is_active,users_detail.*,users_type.type,users.users_types_id FROM users 
               INNER JOIN users_detail on users_detail.id = users.users_detail_id
               INNER JOIN users_type on users_type.id = users.users_types_id
               left join users_picture on users.id = users_picture.users_id
