@@ -56,7 +56,9 @@ exports.getUser = function (req,res) {
                 AND users.users_types_id = ?
                 AND users.is_active='1'`;
     var sql1 = `SELECT ROUND(avg(rating),2)as avg FROM works_review
-                where users_id_ranter= ?`;
+                inner join works on works_review.works_id = works.id
+                inner join users_detail on works.users_id_service = users_detail.id
+                where works.users_id_service = '?'`;
     con.query(sql,[province_id,users_types_id],function(err, result){
         if (result[0] != null) {
             var list = result;

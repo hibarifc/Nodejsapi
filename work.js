@@ -14,17 +14,23 @@ exports.saveWork = function (users_id_service,users_id_ranter,transaction_id,tra
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql ="INSERT INTO works (users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,is_active,created_by,created_at) VALUES (?,?, ?, ?, ?, 1, ?, ?)";
-    
-    con.query(sql,[users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,users_id_service,datetime],function(err, result){
-        if (err) throw err;
-        	console.log("INSERT Work comple");
+    var sql ="INSERT INTO works (users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,is_active,created_by,created_at) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+    var sql1 = "SELECT status FROM admin_configwork";
+    con.query(sql1, function (err, result) {
+        let configid = result[0].status;
+        con.query(sql,[users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,configid,users_id_service,datetime],function(err, result){
+            if(err) throw err;
+            console.log(err);
+            con.end();
+        });
     });
-    con.end();
+   
+    
 }
 
 exports.getWork = function(req,res){
-	let usersid = req.body.usersid;
+    let usersid = req.body.usersid;
+    // let users_types_id = req.body.users_types_id;
     let workstatus_id1 = req.body.workstatus_id1;
     let workstatus_id2 = req.body.workstatus_id2;
 
@@ -107,6 +113,7 @@ exports.canCelwork = function(req,res){
     con.query(sql3,[usersid],function(err,result){
         if (result[0].users_types_id == 1) {
             con.query(sql4, [workid], function (err, result) {
+                
                 massagenotification.sandmassage(users_id_service, 3);
             }) 
         }
@@ -191,7 +198,7 @@ exports.getWorkreview = function(req,res){
     });
     sql=`SELECT works_review.id,works_review.users_id_ranter,works_review.works_id,works_review.rating,works_review.review,users_detail.firstname,users_detail.lastname FROM works_review
         inner join works on works_review.works_id = works.id
-        inner join users_detail on works.users_id_service = users_detail.id
+        inner join users_detail on works.users_id_ranter = users_detail.id
         where works.users_id_service = '?' order by rating DESC`;
 
     con.query(sql,[users_id_ranter],function(err,result){
