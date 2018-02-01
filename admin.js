@@ -85,9 +85,25 @@ exports.getWork = function (req, res) {
   AND works.is_active in(2,1)
   order by works.workstatus_id asc`;
   con.query(sql,function (err, result) {
-    if(err) throw err ;
-    res.json({ ok: true, status : result});
-    con.end();
+    if (result!=null){
+      var list = result;
+      var j = 0;
+      for (var i = 0; i < result.length; i++){
+          var areasimg = result[j].areas_picture ? result[j].areas_picture.toString() : null;
+          var mapimg = result[j].map_picture ? result[j].map_picture.toString() : null;
+          list[j]["areasimg"] = areasimg;
+          list[j]["mapimg"] = mapimg;
+          j++
+      }
+      
+
+      res.json({ ok: true, status: list });
+      con.end();
+  }
+  else{
+      res.json({ ok: false, status: err });
+      con.end();
+  }
   });
 }
 
