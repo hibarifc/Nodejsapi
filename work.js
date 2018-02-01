@@ -30,9 +30,15 @@ exports.saveWork = function (users_id_service,users_id_ranter,transaction_id,tra
 
 exports.getWork = function(req,res){
     let usersid = req.body.usersid;
-    // let users_types_id = req.body.users_types_id;
+    let users_types_id = req.body.users_types_id;
     let workstatus_id1 = req.body.workstatus_id1;
     let workstatus_id2 = req.body.workstatus_id2;
+    var is_active =2;
+
+    if (users_types_id == 2) {
+        is_active = 1;
+        
+    }
 
 	var con = mysql.createConnection({
         host: process.env.DB_HOST,
@@ -51,9 +57,10 @@ exports.getWork = function(req,res){
     WHERE works.users_id_service = ?
     OR works.users_id_ranter = ?
     HAVING works.workstatus_id in(?,?)
+    AND works.is_active in(?,1)
     order by works.workstatus_id asc`;
 
-    con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2],function(err,result){
+    con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2,is_active],function(err,result){
     	 if (result!=null){
             var list = result;
             var j = 0;

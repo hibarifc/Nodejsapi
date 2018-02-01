@@ -16,8 +16,6 @@ exports.savePicture = function (req, res) {
         if (err) throw err;
     });
     con.end();
-
-
 }
 
 exports.getPicturehome = function (req, res) {

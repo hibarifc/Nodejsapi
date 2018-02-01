@@ -13,6 +13,7 @@ var reference = require('./reference');
 var work = require('./work');
 var payment = require('./payment');
 var home = require('./home.js');
+var admin = require('./admin.js');
 
 var port = process.env.PORT || 7777;
 //parse
@@ -23,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -91,6 +92,23 @@ app.get('/user/deleteuser',function(req,res){
 app.post('/user/getusersall',function(req,res){
     users.getUsersall(req,res);
 });
+//----------------------Admin----------------------------
+app.post('/admin/configwork',function(req,res){
+    admin.conFigwork(req,res);
+});
+app.post('/admin/confirmwork',function(req,res){
+    admin.conFirmwork(req,res);
+});
+app.post('/admin/cencalwork',function(req,res){
+    admin.cenCalwork(req,res);
+});
+app.post('/admin/getwork',function(req,res){
+    admin.getWork(req,res);
+});
+app.get('/admin/getuser',function(req,res){
+    admin.getUser(req,res);
+});
+
 // ------------------------DRONE-------------------------
 
 app.post('/drone/add',function(req,res){
