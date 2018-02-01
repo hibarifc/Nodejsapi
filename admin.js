@@ -15,7 +15,7 @@ exports.getUser = function (req, res) {
 
   con.query(sql,function(err,result){
     if(err) throw err ;
-            res.json({ ok: true, status : 'Complete'});
+            res.json({ ok: true, status : result});
             con.end();
 });
 }
@@ -86,7 +86,7 @@ exports.getWork = function (req, res) {
   order by works.workstatus_id asc`;
   con.query(sql,function (err, result) {
     if(err) throw err ;
-    res.json({ ok: true, status : 'Complete'});
+    res.json({ ok: true, status : result});
     con.end();
   });
 }
