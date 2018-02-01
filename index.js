@@ -102,7 +102,7 @@ app.post('/admin/confirmwork',function(req,res){
 app.post('/admin/cencalwork',function(req,res){
     admin.cenCalwork(req,res);
 });
-app.post('/admin/getwork',function(req,res){
+app.get('/admin/getwork',function(req,res){
     admin.getWork(req,res);
 });
 app.get('/admin/getuser',function(req,res){
