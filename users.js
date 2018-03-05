@@ -354,27 +354,36 @@ exports.addToken = function(req,res){
     var sql1="SELECT * FROM users_tokendevice where users_id = ?";
     var sql2="UPDATE users_tokendevice SET token=?  WHERE id=?";
     var sql="INSERT INTO users_tokendevice (users_id,token,is_active,created_by) VALUES (?,?,1,?)";
-    con.query(sql1,[usersid],function(err,result){
-        console.log(result);
-        if (result[0] != null) {
-            var id = result[0].id;
-            con.query(sql2,[token,id],function(err,result){
-                if(err) throw err ;
-                    res.json({ ok: true, status : 'updateComplete'});
+    console.log(usersid);
+    if (usersid != null) {
+        con.query(sql1, [usersid], function (err, result) {
+            if (result[0] != null) {
+                var id = result[0].id;
+                con.query(sql2,[token,id],function(err,result){
+                    if(err) throw err ;
+                    res.json({ ok: true, status: 'updateComplete' });
+                    console.log('updateComplete');
+                        con.end();
+                });
+    
+            }
+            else{
+                con.query(sql,[usersid,token,usersid],function(err,result){
+                    if(err) throw err ;
+                    res.json({ ok: true, status: 'Complete' });
+                    console.log('Complete');
                     con.end();
             });
-
-        }
-        else{
-            con.query(sql,[usersid,token,usersid],function(err,result){
-                if(err) throw err ;
-                res.json({ ok: true, status : 'Complete'});
-                con.end();
+    
+            }
         });
-
-        }
-    });
-
+    
+    }
+    else {
+        res.json({ ok: true, status : 'Complete'});
+        con.end();
+    } 
+   
    
 }
 
