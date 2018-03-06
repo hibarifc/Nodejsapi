@@ -215,7 +215,11 @@ app.post('/home/savepicture', function (req, res) {
 });
 app.post('/home/getpicturehome', function (req, res) {
     home.getPicturehome(req, res);
-    console.log("savePicture ");
+    console.log("getPicture ");
+});
+app.post('/home/deletepicturehome', function (req, res) {
+    home.DeletePicturehome(req, res);
+    console.log("deletepicturehome ");
 });
     //-------------------------test แจ้งเตือน-------------------------------
     // app.post('/open', (req, res) => {
