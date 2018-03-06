@@ -210,7 +210,7 @@ app.post('/payment/savepayment',function(req,res){
 });
 //------------------------Home-------------------------------------
 app.post('/home/savepicture', function (req, res) {
-    payment.savePicture(req, res);
+    home.savePicture(req, res);
     console.log("savePicture ");
 });
     //-------------------------test แจ้งเตือน-------------------------------
