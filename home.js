@@ -14,6 +14,7 @@ exports.savePicture = function (req, res) {
 
     con.query(sql, [picture, status], function (err, result) {
         if (err) throw err;
+        res.json({ ok: true, status : "good"});
     });
     con.end();
 }

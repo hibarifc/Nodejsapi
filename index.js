@@ -213,6 +213,10 @@ app.post('/home/savepicture', function (req, res) {
     home.savePicture(req, res);
     console.log("savePicture ");
 });
+app.post('/home/getpicturehome', function (req, res) {
+    home.getPicturehome(req, res);
+    console.log("savePicture ");
+});
     //-------------------------test แจ้งเตือน-------------------------------
     // app.post('/open', (req, res) => {
   
