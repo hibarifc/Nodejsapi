@@ -99,7 +99,7 @@ exports.getWork = function (req, res) {
   left join areas_picture on informations.id = areas_picture.informations_id
   left join maps_picture on informations.id = maps_picture.informations_id
   WHERE works.workstatus_id in(1,2)
-  AND works.is_active in(2,1)
+  AND works.is_active in(2,2)
   order by works.workstatus_id asc`;
   con.query(sql,function (err, result) {
     if (result!=null){
