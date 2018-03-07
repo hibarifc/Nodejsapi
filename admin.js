@@ -48,6 +48,22 @@ exports.deLeteuser = function(req,res){
 
 
 }
+exports.getConfigwork = function (req, res) {
+  var con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+  });
+  
+  var sql = "SELECT * FROM admin_configwork";
+  con.query(sql, [workstatus], function (err, result) {
+    if(err) throw err ;
+    res.json({ ok: true, status : result});
+    con.end();
+  });
+}
+
 exports.conFigwork = function (req, res) {
   let workstatus = req.body.workstatus;
   var con = mysql.createConnection({

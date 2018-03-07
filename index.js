@@ -108,6 +108,9 @@ app.get('/admin/getwork',function(req,res){
 app.get('/admin/getuser',function(req,res){
     admin.getUser(req,res);
 });
+app.get('/admin/getconfigwork',function(req,res){
+    admin.getConfigwork(req,res);
+});
 
 // ------------------------DRONE-------------------------
 
