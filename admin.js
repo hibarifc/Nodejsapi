@@ -57,7 +57,7 @@ exports.getConfigwork = function (req, res) {
   });
   
   var sql = "SELECT * FROM admin_configwork";
-  con.query(sql, [workstatus], function (err, result) {
+  con.query(sql, function (err, result) {
     if(err) throw err ;
     res.json({ ok: true, status : result});
     con.end();
