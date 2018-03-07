@@ -56,7 +56,7 @@ exports.getConfigwork = function (req, res) {
     database: process.env.DB_NAME
   });
   
-  var sql = `SELECT admin_configwork.*,configwork_status.status FROM admin_configwork
+  var sql = `SELECT admin_configwork.*,configwork_status.status as s FROM admin_configwork
   left join configwork_status on admin_configwork.status = configwork_status.id`
   con.query(sql, function (err, result) {
     if(err) throw err ;
