@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var mailer = require("nodemailer");
 /* ฟังก์ชันสำหรับหา user ทั้งหมดในระบบ ในส่วนนี้ผมจะให้ส่งค่า users ทั้งหมดกลับไปเลย */
 
 
@@ -127,13 +128,23 @@ exports.reGister = function(req,res){
     let email = req.body.email;
     let date = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
-    let datetime = date+' '+time;
+    let datetime = date + ' ' + time;
+    var smtp = {
+        service: 'gmail',
+        auth: {
+    user: 'bankho181@gmail.com',
+    pass: 'b053729934'
+     }
+      };
+    var smtpTransport = mailer.createTransport(smtp);
+  
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
+
     //ตรวจสอบว่ามีในฐานข้อมูลหือป่าว
     var check = "SELECT id from users WHERE username=?";
     var check1 = "SELECT id from users_detail WHERE email=?";
@@ -155,7 +166,7 @@ exports.reGister = function(req,res){
                     else{
                         console.log("email is ready");
                         //ฟังชันบันทึกข้อมูลลงฐานข้อมูล
-                        var sql = "INSERT INTO users (users_types_id,username,password,is_active,created_by,created_at) VALUES (?,?,?,1,'system',?)";
+                        var sql = "INSERT INTO users (users_types_id,username,password,is_active,created_by,created_at) VALUES (?,?,?,0,'system',?)";
                         var sql1 = "INSERT INTO users_detail (email,is_active,created_by,created_at) VALUES (?,1,'system',?)";
                         var sql2 = "SELECT id from users_detail WHERE email=?";
                         var sql3 = "UPDATE users SET users_detail_id = ? WHERE id = ? ";
@@ -175,8 +186,25 @@ exports.reGister = function(req,res){
                                 con.query(sql3,[result[0].id,result[0].id],function(err, result){
                                     if (err) throw err;
                                       console.log("update comple");
-                                });
-                                con.end();
+                            });
+                            con.end();
+                            //ส่งอีเมล์ยืนยันให้user
+                            var mail = {
+                                from: 'bankho181@gmail.com', //from email (option)
+                                to: email, //to email (require)
+                                subject: `ยืนยันอีเมล์DRONEMANAGEMENT`, //subject
+                                html: `<p>กดเพื่อยืนยัน http://localhost:7777/user/activeemail/`+result[0].id+`</p>`  //email body
+                             }
+                            smtpTransport.sendMail(mail, function(error, response){
+                                smtpTransport.close();
+                                if(error){
+                                   //error handler
+                                   console.log(error); 
+                                }else{
+                                   //success handler 
+                                   console.log('send email success');
+                                }
+                             });
                                
                         });
                         res.json({ ok: true, status : 'Complete'});
@@ -201,7 +229,7 @@ exports.logIn = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,username,users_types_id from users WHERE username=? AND password=? AND is_active = 1";
+    var sql = "SELECT id,username,users_types_id from users WHERE username=? AND password=? AND is_active in(1,2)";
     var sql2 = "INSERT INTO user_status_history(users_id,login_time,is_active,created_by,created_at) VALUES (?,?,1,'system',?)";
     var sql3 = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM user_status_history WHERE users_id =? )";
     var sql4 = "UPDATE users SET users_status_history_id = ? WHERE id = ?";
@@ -454,6 +482,26 @@ exports.deLeteuser = function(req,res){
                 res.json({ ok: true, status : 'Complete'});
                 con.end();
     });
+
+
+}
+
+exports.acTiveemail = function (req, res) {
+    
+    var usersid = req.params.usersid;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+    var sql = `UPDATE users SET is_active='2' WHERE id=?`;
+    con.query(sql,[usersid],function(err,result){
+        if(err) throw err ;
+                res.send("ยืนยันสำเร็จ ");
+                con.end();
+    });
+    console.log(usersid)
 
 
 }

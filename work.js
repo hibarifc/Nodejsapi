@@ -46,7 +46,7 @@ exports.getWork = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql =`  SELECT works.*,areas_picture.areas_picture,maps_picture.map_picture,users_detail.firstname firstname_r,users_detail.lastname lastname_r,b.firstname firstname_s,b.lastname lastname_s,transaction_detail.drone_id,informations.adress,informations.area_size,informations.latitude,informations.longtitude,informations.name_plants,informations.name_chemicals,informations.chemicals,workstatus.status,transaction_detail.datetime,transaction_detail.price FROM works
+    var sql =`  SELECT works.*,areas_picture.areas_picture,maps_picture.map_picture,users_detail.firstname firstname_r,users_detail.lastname lastname_r,b.firstname firstname_s,b.lastname lastname_s,transaction_detail.drone_id,informations.adress,informations.area_size,informations.latitude,informations.longtitude,informations.name_plants,informations.name_chemicals,informations.chemicals,workstatus.status,transaction_detail.datetime,transaction_detail.price,works_review.works_id,works_review.users_id_ranter,works_review.rating,works_review.review FROM works
     INNER JOIN transaction_detail ON works.transaction_detail_id=transaction_detail.id
     INNER JOIN informations ON transaction_detail.informations_id = informations.id
     INNER JOIN workstatus ON works.workstatus_id = workstatus.id
@@ -54,11 +54,12 @@ exports.getWork = function(req,res){
     inner join users_detail b on works.users_id_service = b.id
     left join areas_picture on informations.id = areas_picture.informations_id
     left join maps_picture on informations.id = maps_picture.informations_id
+    left Join works_review on works.id = works_review.works_id
     WHERE works.users_id_service = ?
     OR works.users_id_ranter = ?
     HAVING works.workstatus_id in(?,?)
     AND works.is_active in(?,1)
-    order by works.workstatus_id asc`;
+    order by transaction_detail.datetime DESC`;
 
     con.query(sql,[usersid,usersid,workstatus_id1,workstatus_id2,is_active],function(err,result){
     	 if (result!=null){

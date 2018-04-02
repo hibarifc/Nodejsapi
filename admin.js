@@ -33,14 +33,15 @@ exports.upDateuser = function (req, res) {
 
 exports.deLeteuser = function(req,res){
   var usersid = req.body.usersid;
+  var is_active = req.body.is_active;
   var con = mysql.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database : process.env.DB_NAME
   });
-  var sql = `UPDATE users SET is_active='0' WHERE id=?`;
-  con.query(sql,[usersid],function(err,result){
+  var sql = `UPDATE users SET is_active='?' WHERE id=?`;
+  con.query(sql,[is_active,usersid],function(err,result){
       if(err) throw err ;
               res.json({ ok: true, status : 'Complete'});
               con.end();

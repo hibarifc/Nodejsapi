@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "postinstall": "npm i pm2 -g",
-    "start": "pm2 start index.js"
+    "start": "pm2 start index.js -i 5",
+    "stop": "pm2 stop all"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -15,6 +16,7 @@
     "express": "^4.16.2",
     "mysql": "^2.15.0",
     "node-gcm": "^0.14.9",
+    "nodemailer": "^4.6.4",
     "pm2": "^2.7.2"
   }
 }

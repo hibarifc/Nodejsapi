@@ -3,7 +3,7 @@ var app = require('express')();
 var bodyParser = require('body-parser');
 require('dotenv').config();
 var mysql = require('mysql');
-
+var mailer = require("nodemailer");
 
 var massagenotification = require('./massagenotification');
 var transaction = require('./transaction');
@@ -92,6 +92,11 @@ app.get('/user/deleteuser',function(req,res){
 app.post('/user/getusersall',function(req,res){
     users.getUsersall(req,res);
 });
+
+app.get('/user/activeemail/:usersid',function(req,res){
+    users.acTiveemail(req,res);
+
+});
 //----------------------Admin----------------------------
 app.post('/admin/configwork',function(req,res){
     admin.conFigwork(req,res);
@@ -110,6 +115,9 @@ app.get('/admin/getuser',function(req,res){
 });
 app.get('/admin/getconfigwork',function(req,res){
     admin.getConfigwork(req,res);
+});
+app.post('/admin/deleteuser',function(req,res){
+    admin.deLeteuser(req,res);
 });
 
 // ------------------------DRONE-------------------------
