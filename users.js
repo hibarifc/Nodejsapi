@@ -13,11 +13,10 @@ exports.getUserdetail = function(req,res) {
         database : process.env.DB_NAME
     });
 
-    var sql = `SELECT users.*,users_detail.*,users_picture.users_picture FROM users 
+    var sql = `SELECT users_detail.*,users.*,users_picture.users_picture FROM users 
     INNER JOIN users_detail ON users.users_detail_id=users_detail.id 
     left join users_picture on users.id = users_picture.users_id
-    WHERE users.id = ?
-    AND users.is_active = '1'`;
+    WHERE users.id = ?`;
     con.query(sql,[usersid],function(err,result){
         if (result[0]!=null){
             var list = result;
@@ -132,7 +131,7 @@ exports.reGister = function(req,res){
     var smtp = {
         service: 'gmail',
         auth: {
-    user: 'bankho181@gmail.com',
+    user: 'thedrone1995@gmail.com',
     pass: 'b053729934'
      }
       };
@@ -166,7 +165,7 @@ exports.reGister = function(req,res){
                     else{
                         console.log("email is ready");
                         //ฟังชันบันทึกข้อมูลลงฐานข้อมูล
-                        var sql = "INSERT INTO users (users_types_id,username,password,is_active,created_by,created_at) VALUES (?,?,?,0,'system',?)";
+                        var sql = "INSERT INTO users (users_types_id,username,password,is_active,created_by,created_at) VALUES (?,?,?,2,'system',?)";
                         var sql1 = "INSERT INTO users_detail (email,is_active,created_by,created_at) VALUES (?,1,'system',?)";
                         var sql2 = "SELECT id from users_detail WHERE email=?";
                         var sql3 = "UPDATE users SET users_detail_id = ? WHERE id = ? ";
@@ -193,7 +192,7 @@ exports.reGister = function(req,res){
                                 from: 'bankho181@gmail.com', //from email (option)
                                 to: email, //to email (require)
                                 subject: `ยืนยันอีเมล์DRONEMANAGEMENT`, //subject
-                                html: `<p>กดเพื่อยืนยัน http://localhost:7777/user/activeemail/`+result[0].id+`</p>`  //email body
+                                html: `<p>กดเพื่อยืนยัน http://61.7.228.136:7777/user/activeemail/`+result[0].id+`</p>`  //email body
                              }
                             smtpTransport.sendMail(mail, function(error, response){
                                 smtpTransport.close();
@@ -229,49 +228,56 @@ exports.logIn = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = "SELECT id,username,users_types_id from users WHERE username=? AND password=? AND is_active in(1,2)";
+    var sql = "SELECT id,username,users_types_id,is_active from users WHERE username=? AND password=? ";
     var sql2 = "INSERT INTO user_status_history(users_id,login_time,is_active,created_by,created_at) VALUES (?,?,1,'system',?)";
     var sql3 = "SELECT id FROM user_status_history WHERE id =(SELECT MAX(id)FROM user_status_history WHERE users_id =? )";
     var sql4 = "UPDATE users SET users_status_history_id = ? WHERE id = ?";
-    var sql5 = `SELECT users_detail.lat,users_detail.lng FROM users 
+    var sql5 = `SELECT users_detail.lat,users_detail.lng,users.is_active FROM users 
                 left join users_detail on users.users_detail_id = users_detail.id
                 where users.id = ?`;
     con.query(sql,[username,password],function(err,result){
        
-         if (result[0]!=null){
+        if (result[0] != null) {
+            
+            if (result[0].is_active == 2) {
+                res.json({ ok: false, status : 'กรุณายืนยันอีเมล์'});
+            }
+            else {
+                
+            
             let userid = result[0].id;
             let username = result[0].username;
             let type = result[0].users_types_id;
-            con.query(sql2,[userid,datetime,datetime],function(err,result){
-               if (err) throw err;
+            con.query(sql2, [userid, datetime, datetime], function (err, result) {
+                if (err) throw err;
                 console.log("history update");
             });
             
-            con.query(sql3,[userid],function(err,result){
+            con.query(sql3, [userid], function (err, result) {
 
-                if (result[0]!=null) {
+                if (result[0] != null) {
                     let historyid = result[0].id;
                     console.log(result[0].id);
-                    con.query(sql4,[result[0].id,userid],function(err,result){
+                    con.query(sql4, [result[0].id, userid], function (err, result) {
                         console.log("user update");
                     });
                     con.end();
                     
                 }
-                else{
+                else {
                     console.log('file');
                 }
-             });
-             con.query(sql5, [userid], function (err, result) {
-                res.json({ ok: true, status : 'login',userid : userid,username : username ,type :type,lat:result[0].lat,lng:result[0].lng });
-             }); 
+            });
+            con.query(sql5, [userid], function (err, result) {
+                res.json({ ok: true, status: 'login', userid: userid, username: username, type: type, lat: result[0].lat, lng: result[0].lng,is_active:result[0].is_active });
+            });
            
             console.log(userid);
-           
+            }
             
          }
          else{
-            res.json({ ok: false, status : 'No login'});
+            res.json({ ok: false, status : 'Check USER and PASS'});
             
          }
     });
@@ -336,12 +342,16 @@ exports.upDateuser = function (req,res) {
     var sql2 = "INSERT INTO users_picture (users_id,users_picture,is_active,created_by) VALUES (?,?,'1',?)";
     var sql3 = "SELECT * FROM users_picture where users_id = ?"
     var sql4 = "UPDATE users_picture SET users_picture=?,updated_by=? WHERE id=?"
+    var sql5 = `UPDATE users SET is_active='1' WHERE id=?`;
     con.query(sql,[userid],function(err,result){
          if (result[0]!=null){
             var usersdetailid =result[0].users_detail_id;
             con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,lat,lng,phone,address,city,postcode,passport_number,userid],function (err,result) {
                 console.log("updateuserdetail");
              });
+            con.query(sql5,[usersid],function(err,result){
+                console.log("updateuser");
+            });
             con.query(sql3, [userid], function (err, result) {
                 if (result[0] != null) {
                     var id = result[0].id;
@@ -495,7 +505,7 @@ exports.acTiveemail = function (req, res) {
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql = `UPDATE users SET is_active='2' WHERE id=?`;
+    var sql = `UPDATE users SET is_active='3' WHERE id=?`;
     con.query(sql,[usersid],function(err,result){
         if(err) throw err ;
                 res.send("ยืนยันสำเร็จ ");
