@@ -349,7 +349,7 @@ exports.upDateuser = function (req,res) {
             con.query(sql1,[nationality_id,province_id,firstname,lastname,pathphoto,lat,lng,phone,address,city,postcode,passport_number,userid],function (err,result) {
                 console.log("updateuserdetail");
              });
-            con.query(sql5,[usersid],function(err,result){
+            con.query(sql5,[usersdetailid],function(err,result){
                 console.log("updateuser");
             });
             con.query(sql3, [userid], function (err, result) {
@@ -436,7 +436,8 @@ exports.getUserall = function(req,res){
               INNER JOIN users_detail on users_detail.id = users.users_detail_id
               INNER JOIN users_type on users_type.id = users.users_types_id
               left join users_picture on users.id = users_picture.users_id
-              where users.users_types_id = 2`;
+              where users.users_types_id = 2
+              and users.is_active = 1`;
     var sql1 = `SELECT ROUND(avg(rating),2)as avg FROM works_review
                 inner join works on works_review.works_id = works.id
                 inner join users_detail on works.users_id_service = users_detail.id

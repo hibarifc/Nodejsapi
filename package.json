@@ -6,8 +6,9 @@
   "private": true,
   "scripts": {
     "postinstall": "npm i pm2 -g",
-    "start": "pm2 start index.js -i 5",
-    "stop": "pm2 stop all"
+    "start": "pm2 start index.js -n APIDRONE -i 2",
+    "stop": "pm2 stop APIDRONE"
+   
   },
   "dependencies": {
     "body-parser": "^1.18.2",

@@ -46,7 +46,7 @@ exports.getWork = function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql =`  SELECT works.*,areas_picture.areas_picture,maps_picture.map_picture,users_detail.firstname firstname_r,users_detail.lastname lastname_r,b.firstname firstname_s,b.lastname lastname_s,transaction_detail.drone_id,informations.adress,informations.area_size,informations.latitude,informations.longtitude,informations.name_plants,informations.name_chemicals,informations.chemicals,workstatus.status,transaction_detail.datetime,transaction_detail.price,works_review.works_id,works_review.users_id_ranter,works_review.rating,works_review.review FROM works
+    var sql =`  SELECT works.*,areas_picture.areas_picture,maps_picture.map_picture,users_detail.firstname firstname_r,users_detail.lastname lastname_r,b.firstname firstname_s,b.lastname lastname_s,transaction_detail.drone_id,informations.adress,informations.area_size,informations.latitude,informations.longtitude,informations.name_plants,informations.name_chemicals,informations.chemicals,workstatus.status,transaction_detail.datetime,transaction_detail.price,works_review.works_id,works_review.users_id_ranter as idranter,works_review.rating,works_review.review FROM works
     INNER JOIN transaction_detail ON works.transaction_detail_id=transaction_detail.id
     INNER JOIN informations ON transaction_detail.informations_id = informations.id
     INNER JOIN workstatus ON works.workstatus_id = workstatus.id
@@ -121,24 +121,28 @@ exports.canCelwork = function(req,res){
     con.query(sql3,[usersid],function(err,result){
         if (result[0].users_types_id == 1) {
             con.query(sql4, [workid], function (err, result) {
-                
+                var users_id_service = result[0].users_id_service
                 massagenotification.sandmassage(users_id_service, 3);
             }) 
         }
-        else{
-            massagenotification.sandmassage(users_id_service,3);
+        else {
+            con.query(sql4, [workid], function (err, result) {
+                var users_id_ranter = result[0].users_id_ranter
+                massagenotification.sandmassage(users_id_ranter, 3);
+            }) 
+          
         }
     });
 
     con.query(sql1,[workid],function(err,result){
-    	if(result[0]!=null){
-    		result[0].transaction_detail_id
-    		con.query(sql2,[result[0].transaction_detail_id],function(err,result){
-    			if(result[0]!=null){
-    				drone.upDatedrone(result[0].drone_id,'1');
-                    
-    				console.log("updatedrone")
-    			}
+        if (result[0] != null) {
+            console.log(result[0]);
+    		var transaction_detail_id = result[0].transaction_detail_id
+    		con.query(sql2,[transaction_detail_id],function(err,result){
+                console.log(result[0].drone_id)
+    			drone.upDatedrone(result[0].drone_id,'1');   
+    			console.log("updatedrone")
+    			
     		});
 
     	}
@@ -146,7 +150,7 @@ exports.canCelwork = function(req,res){
     con.query(sql,[usersid,workid],function(err,result){
         if(err) throw err;
         res.json({ ok: true, status : "cancel Complete"});
-        
+        con.end();
     });
    
 

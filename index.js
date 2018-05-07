@@ -17,9 +17,10 @@ var admin = require('./admin.js');
 
 var port = process.env.PORT || 7777;
 //parse
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({
-	extended: true
+    extended: true,
+    limit: '50mb'
 }));
 app.use(function (req, res, next) {
 

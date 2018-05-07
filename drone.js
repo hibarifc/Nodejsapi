@@ -157,6 +157,7 @@ exports.upDatedronedetail =function(req,res){
     let date = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
     let datetime = date+' '+time;
+    console.log(req.body);
 
     var con = mysql.createConnection({
         host: process.env.DB_HOST,
@@ -164,14 +165,35 @@ exports.upDatedronedetail =function(req,res){
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    sql = `UPDATE drones_detail SET name=?, size=?, price=?,pathpicture=?,updated_by=? WHERE id=?`;
-
-    con.query(sql,[name,size,price,pathpicture,users_id,drone_id],function(err,result){
+    var sql = `UPDATE drones_detail SET name=?, size=?, price=?,updated_by=? WHERE id=?`;
+    var sql1 = `UPDATE drones_picture SET drone_picture=? WHERE id =?`
+    var sql2 = "INSERT INTO drones_picture (drone_id,pathpicture,is_active,created_by) VALUES (?,?,'1',?)";
+    var sql3 = "SELECT * FROM drones_picture where drone_id = ?"
+    con.query(sql,[name,size,price,users_id,drone_id],function(err,result){
         if (err) throw err;
         console.log('UpdateDronedetail');
-        res.json({ ok: true, status : "UpdateDronedetail"});
+       
     });
-    con.end();
+    con.query(sql3, [drone_id], function (err, result) {
+        if (result[0] != null) {
+            var id = result[0].id;
+            con.query(sql1, [pathpicture,drone_id], function (err, result) {
+                console.log("UPDATEPic");
+                console.log(pathpicture);
+                res.json({ ok: true, status: 'UPDATEPic' });
+                con.end(); 
+            });
+        }
+        else {
+            con.query(sql2,[drone_id,pathpicture,userid],function(err, result){
+                console.log("InsertPic");
+                con.end(); 
+                res.json({ ok: true, status: 'InsertPic' });
+            });
+            
+        }
+    });
+   
 
 }
 
