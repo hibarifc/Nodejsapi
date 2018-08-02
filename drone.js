@@ -73,7 +73,7 @@ exports.getDrone = function (req,res){
     INNER JOIN transaction_detail ON drones.drones_detail_id=transaction_detail.drone_id
     inner join works ON works.transaction_detail_id=transaction_detail.id
     WHERE drones.users_id = ?
-    and works.workstatus_id =1
+    and works.workstatus_id in(1,2)
     AND drones.is_active = '1' 
 `;
     con.query(sql,[users_id],function(err,result){
