@@ -67,12 +67,15 @@ exports.getDrone = function (req,res){
         database : process.env.DB_NAME
     });
 
-    var sql = ` SELECT * FROM drones 
-                INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id 
-                INNER JOIN drones_status ON drones.drones_status_id= drones_status.id
-                WHERE drones.users_id = ? 
-                AND drones.is_active = '1' 
-                AND drones.drones_status_id ='1'`;
+    var sql = ` SELECT drones.*,drones_detail.* ,transaction_detail.datetime FROM drones 
+    INNER JOIN drones_detail ON drones.drones_detail_id=drones_detail.id 
+    INNER JOIN drones_status ON drones.drones_status_id= drones_status.id
+    INNER JOIN transaction_detail ON drones.drones_detail_id=transaction_detail.drone_id
+    inner join works ON works.transaction_detail_id=transaction_detail.id
+    WHERE drones.users_id = ?
+    and works.workstatus_id =1
+    AND drones.is_active = '1' 
+`;
     con.query(sql,[users_id],function(err,result){
         if (result[0]!=null){
              res.json({ ok: true, status : result});

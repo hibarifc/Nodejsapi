@@ -79,7 +79,7 @@ exports.saveTransaction = function (req,res) {
 									});
 	        			}
 					});
-
+   					 //บันทึกลงตาราง work
 					con.query(sql6,[transactionid],function(err,result){
 						if(result!=null){
 							for(i=0;i<result.length;i++)
@@ -89,13 +89,13 @@ exports.saveTransaction = function (req,res) {
 					});
 
 					  //อัพเดทสถานะของโดรน
-					drone.upDatedrone(drone_id,'3');
+					// drone.upDatedrone(drone_id,'3');
 
 		        }
 
 		        res.json({ ok: true, status : "OK"});
 
-		        //บันทึกลงตาราง work
+		    
 
 
 
