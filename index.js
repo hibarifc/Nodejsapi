@@ -138,7 +138,9 @@ app.post('/drone/updatedronedetail',function(req,res){
 app.post('/drone/deletetdrone',function(req,res){
     drone.deLetedrone(req,res);
 });
-
+app.post('/drone/getdatedrone',function(req,res){
+    drone.getdatedrone(req,res);
+});
 
 // ------------------------------GET REFERENCE---------------------
 
