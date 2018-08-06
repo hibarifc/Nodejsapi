@@ -5,9 +5,9 @@ var massagenotification = require('./massagenotification');
 
 exports.saveWork = function (users_id_service,users_id_ranter,drone_id,date,transaction_id,transaction_detail_id) {
 	let workstatus_id = '1';
-	let date = new Date().toLocaleDateString();
+	let dates = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
-    let datetime = date+' '+time;
+    let datetime = dates+' '+time;
 	var con = mysql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
