@@ -3,7 +3,7 @@ var drone = require('./drone');
 var massagenotification = require('./massagenotification');
 
 
-exports.saveWork = function (users_id_service,users_id_ranter,transaction_id,transaction_detail_id) {
+exports.saveWork = function (users_id_service,users_id_ranter,drone_id,transaction_id,transaction_detail_id) {
 	let workstatus_id = '1';
 	let date = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
@@ -14,11 +14,11 @@ exports.saveWork = function (users_id_service,users_id_ranter,transaction_id,tra
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql ="INSERT INTO works (users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,is_active,created_by,created_at) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+    var sql ="INSERT INTO works (users_id_service,users_id_ranter,drone_id,transaction_id,transaction_detail_id,workstatus_id,is_active,created_by,created_at) VALUES (?,?,?, ?, ?, ?, ?, ?, ?)";
     var sql1 = "SELECT status FROM admin_configwork";
     con.query(sql1, function (err, result) {
         let configid = result[0].status;
-        con.query(sql,[users_id_service,users_id_ranter,transaction_id,transaction_detail_id,workstatus_id,configid,users_id_service,datetime],function(err, result){
+        con.query(sql,[users_id_service,users_id_ranter,drone_id,transaction_id,transaction_detail_id,workstatus_id,configid,users_id_service,datetime],function(err, result){
             if(err) throw err;
             console.log(err);
             con.end();

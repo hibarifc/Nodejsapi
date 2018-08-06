@@ -84,7 +84,7 @@ exports.saveTransaction = function (req,res) {
 						if(result!=null){
 							for(i=0;i<result.length;i++)
 								var transaction_detail_id = result[i].id;
-								work.saveWork(users_id_service,users_id_ranter,transactionid,transaction_detail_id);
+								work.saveWork(users_id_service,users_id_ranter,drone_id,transactionid,transaction_detail_id);
 						}
 					});
 
