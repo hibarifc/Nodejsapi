@@ -245,22 +245,18 @@ exports.getdatedrone = function(req,res){
 
 
     var sql =`SELECT date FROM works
-    and drone_id = ?
+    where drone_id = ?
     and workstatus_id in(1,2)`;
-    con.query(sql,[users_id,drone_id],function(err,result){
-         if (result[0]!=null){
-               con.query(sql,[drone_id],function(err,result){
+    con.query(sql,[drone_id],function(err,result){
+       
+             
                     if (err) throw err;
                     res.json({ ok: true, status : result});
                     con.end();
 
-                });
-        }
-        else{
-            res.json({ ok: false, status : " drone is  emptry"});
-            con.end();
-           
-        }
+            
+        
+       
     });
   
     
