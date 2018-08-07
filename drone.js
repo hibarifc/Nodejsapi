@@ -232,7 +232,7 @@ exports.deLetedrone =function(req,res){
 
 
 }
-exports.getdatedrone =function(req,res){
+exports.getdatedrone = function(req,res){
     let users_id = req.body.users_id;
     let drone_id = req.body.drone_id;
 
@@ -249,7 +249,7 @@ exports.getdatedrone =function(req,res){
     and workstatus_id in(1,2)`;
     con.query(sql,[users_id,drone_id],function(err,result){
          if (result[0]!=null){
-               con.query(sql,[users_id,drone_id],function(err,result){
+               con.query(sql,[drone_id],function(err,result){
                     if (err) throw err;
                     res.json({ ok: true, status : result});
                     con.end();
