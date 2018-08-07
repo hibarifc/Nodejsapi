@@ -246,7 +246,8 @@ exports.getdatedrone =function(req,res){
 
     var sql =`SELECT date FROM works
 	where users_id_service = ?
-    and drone_id = ?`;
+    and drone_id = ?
+    and workstatus_id in(1,2)`;
     con.query(sql,[users_id,drone_id],function(err,result){
          if (result[0]!=null){
                con.query(sql,[users_id,drone_id],function(err,result){
