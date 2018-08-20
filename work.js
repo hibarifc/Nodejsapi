@@ -220,3 +220,73 @@ exports.getWorkreview = function(req,res){
     });
 
 }
+
+
+exports.upDateread = function(req,res){
+    let typeuser = req.body.users_id_ranter;
+    let workid = req.body.workid;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    if (typeuser ==1) {
+        var sql ="UPDATE works SET ranterread=1 WHERE ?";
+        con.query(sql,[workid],function(err,result){
+        if (err) throw err;
+            console.log("upDateread");
+            
+        
+    });
+    con.end();
+    }
+    else{
+        var sql ="UPDATE works SET serviceread=1 WHERE ?";
+        con.query(sql,[workid],function(err,result){
+        if (err) throw err;
+            console.log("upDateread");
+            
+        
+    });
+    con.end();
+    }
+    
+}
+exports.getread = function(req,res){
+    let usertype = req.body.usertype;
+    let userid = req.body.userid;
+    var con = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database : process.env.DB_NAME
+    });
+
+    if (usertype ==1) {
+        var sql =`	SELECT ranterread FROM a4j8w6p1ld5oeb66.works
+        where users_id_ranter = ?
+        and ranterread = 0`;
+        con.query(sql,[userid],function(err,result){
+        if (err) throw err;
+            console.log("getread");
+            res.json({ ok: true, status : result});    
+        
+    });
+    con.end();
+    }
+    else{
+        var sql =`	SELECT serviceread FROM a4j8w6p1ld5oeb66.works
+        where users_id_service = ?
+        and serviceread = 0`;
+        con.query(sql,[userid],function(err,result){
+        if (err) throw err;
+            console.log("getread");
+            res.json({ ok: true, status : result});
+        
+    });
+    con.end();
+    }
+    
+}

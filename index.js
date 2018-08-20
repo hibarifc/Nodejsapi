@@ -216,6 +216,15 @@ app.post('/work/getworkreview',function(req,res){
     work.getWorkreview(req,res);
     console.log("getWorkreview ");
 });
+//เอาไว้อัพสถานะการเห็นของยูเซอร์
+app.post('/work/updateread',function(req,res){
+    work.upDateread(req,res);
+    console.log("upDateread ");
+});
+app.post('/work/getread',function(req,res){
+    work.getread(req,res);
+    console.log("getread ");
+});
 
 //-------------------------payment-----------------------------
 app.post('/payment/savepayment',function(req,res){
