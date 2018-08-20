@@ -14,7 +14,7 @@ exports.saveWork = function (users_id_service,users_id_ranter,drone_id,date,tran
         password: process.env.DB_PASSWORD,
         database : process.env.DB_NAME
     });
-    var sql ="INSERT INTO works (users_id_service,users_id_ranter,drone_id,date,transaction_id,transaction_detail_id,workstatus_id,is_active,created_by,created_at) VALUES (?,?,?,?, ?, ?, ?, ?, ?, ?)";
+    var sql ="INSERT INTO works (users_id_service,users_id_ranter,drone_id,date,transaction_id,transaction_detail_id,workstatus_id,is_active,created_by,created_at,serviceread,ranterread) VALUES (?,?,?,?, ?, ?, ?, ?, ?, ?,0,0)";
     var sql1 = "SELECT status FROM admin_configwork";
     con.query(sql1, function (err, result) {
         let configid = result[0].status;
