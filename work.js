@@ -272,9 +272,9 @@ exports.getread = function(req,res){
         if (err) throw err;
             console.log("getread");
             res.json({ ok: true, status : result});    
-        
+            con.end();
     });
-    con.end();
+
     }
     else{
         var sql =`	SELECT serviceread FROM a4j8w6p1ld5oeb66.works
@@ -284,9 +284,9 @@ exports.getread = function(req,res){
         if (err) throw err;
             console.log("getread");
             res.json({ ok: true, status : result});
-        
+            con.end();
     });
-    con.end();
+    
     }
     
 }
