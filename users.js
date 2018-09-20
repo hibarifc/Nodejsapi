@@ -189,10 +189,10 @@ exports.reGister = function(req,res){
                             con.end();
                             //ส่งอีเมล์ยืนยันให้user
                             var mail = {
-                                from: 'bankho181@gmail.com', //from email (option)
+                                from: 'thedrone1995@gmail.com', //from email (option)
                                 to: email, //to email (require)
                                 subject: `ยืนยันอีเมล์DRONEMANAGEMENT`, //subject
-                                html: `<p>กดเพื่อยืนยัน http://61.7.228.136:7777/user/activeemail/`+result[0].id+`</p>`  //email body
+                                html: `<a href="http://apinodejs.azurewebsites.net/user/activeemail/`+result[0].id+`" class="btn btn-info" role="button"> กดเพื่อยืนยัน</a>`  //email body
                              }
                             smtpTransport.sendMail(mail, function(error, response){
                                 smtpTransport.close();
