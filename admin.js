@@ -21,6 +21,20 @@ exports.getUser = function (req, res) {
 }
 
 exports.upDateuser = function (req, res) {
+  let id = req.body.id;
+  let nationality_id =req.body.nationality_id;
+  let province_id =req.body.province_id;
+  let firstname =req.body.firstname;
+  let lastname= req.body.lastname;
+  let pathphoto = req.body.pathphoto;
+  let lat = req.body.lat;
+  let lng = req.body.lng;
+  let email = req.body.email;
+  let phone =req.body.phone;
+  let address =req.body.address;
+  let city= req.body.city;
+  let postcode =req.body.postcode;
+  let passport_number =req.body.passport_number;
   var con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -28,7 +42,13 @@ exports.upDateuser = function (req, res) {
     database: process.env.DB_NAME
   });
 
-  var sql = "";
+  var sql = `UPDATE users_detail SET nationality_id = ?,province_id = ?, firstname = ?, lastname = ?, pathphoto = ?, lat = ?, lng = ?, email = ?, phone = ?, address = ?, city = ?, postcode = ?, passport_number = ? WHERE id = ?;
+  `;
+  con.query(sql,[nationality_id,province_id,firstname,lastname,pathphoto,lat,lng,email,phone,address,city,postcode,passport_number,id],function(err,result){
+    if(err) throw err ;
+            res.json({ ok: true, status : result});
+            con.end();
+  });
 }
 
 exports.deLeteuser = function(req,res){

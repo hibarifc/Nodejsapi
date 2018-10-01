@@ -120,6 +120,9 @@ app.get('/admin/getconfigwork',function(req,res){
 app.post('/admin/deleteuser',function(req,res){
     admin.deLeteuser(req,res);
 });
+app.post('/admin/updateuser',function(req,res){
+    admin.upDateuser(req,res);
+});
 
 // ------------------------DRONE-------------------------
 
